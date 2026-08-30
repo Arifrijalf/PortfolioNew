@@ -4,6 +4,8 @@ import { toast } from "sonner";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { useSectionVisibility } from "@/hooks/useSectionVisibility";
+import { SmoothSection } from "@/components/SmoothSection";
 
 const projects = [
   {
@@ -126,6 +128,12 @@ function NameMarquee() {
 }
 
 export default function Home() {
+  const { ref: aboutRef, state: aboutState } = useSectionVisibility();
+  const { ref: workRef, state: workState } = useSectionVisibility();
+  const { ref: practiceRef, state: practiceState } = useSectionVisibility();
+  const { ref: testimonialsRef, state: testimonialsState } = useSectionVisibility();
+  const { ref: experienceRef, state: experienceState } = useSectionVisibility();
+  const { ref: contactRef, state: contactState } = useSectionVisibility();
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const [detailProject, setDetailProject] = useState<(typeof projects)[number] | null>(null);
@@ -193,31 +201,7 @@ export default function Home() {
 
   useEffect(() => {
     document.documentElement.classList.add("motion-ready");
-    const elements = Array.from(document.querySelectorAll<HTMLElement>(".reveal-on-scroll"));
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-      elements.forEach((element) => element.classList.add("is-visible"));
-      return () => document.documentElement.classList.remove("motion-ready");
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
-    );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => {
-      observer.disconnect();
-      document.documentElement.classList.remove("motion-ready");
-    };
+    return () => document.documentElement.classList.remove("motion-ready");
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
@@ -333,7 +317,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="about-intro section-shell reveal-on-scroll" id="about" aria-labelledby="about-title">
+        <SmoothSection ref={aboutRef} state={aboutState} className="about-intro section-shell" id="about" aria-labelledby="about-title">
           <div className="section-rail"><span>About</span></div>
           <div className="about-intro-copy">
             <p className="section-overline">Electronics Engineering · Padang State Polytechnic</p>
@@ -345,9 +329,9 @@ export default function Home() {
             <div><dt>Working with</dt><dd>Embedded systems, connected devices, and technical documentation</dd></div>
             <div><dt>Based in</dt><dd>Padang, Indonesia</dd></div>
           </dl>
-        </section>
+        </SmoothSection>
 
-        <section className="work-section section-shell reveal-on-scroll" id="work" aria-labelledby="work-title">
+        <SmoothSection ref={workRef} state={workState} className="work-section section-shell" id="work" aria-labelledby="work-title">
           <div className="section-heading">
             <div className="section-rail"><span>Selected work</span></div>
             <div>
@@ -397,9 +381,9 @@ export default function Home() {
               );
             })}
           </div>
-        </section>
+        </SmoothSection>
 
-        <section className="practice-section section-shell reveal-on-scroll" id="practice" aria-labelledby="practice-title">
+        <SmoothSection ref={practiceRef} state={practiceState} className="practice-section section-shell" id="practice" aria-labelledby="practice-title">
           <div className="section-heading">
             <div className="section-rail"><span>Practice</span></div>
             <div>
@@ -417,9 +401,9 @@ export default function Home() {
               </article>
             ))}
           </div>
-        </section>
+        </SmoothSection>
 
-        <section className="testimonials-section section-shell reveal-on-scroll" aria-labelledby="testimonials-title">
+        <SmoothSection ref={testimonialsRef} state={testimonialsState} className="testimonials-section section-shell" aria-labelledby="testimonials-title">
           <div className="section-heading">
             <div className="section-rail"><span>Client notes</span></div>
             <div>
@@ -431,9 +415,9 @@ export default function Home() {
           <div className="testimonial-carousel" aria-live="polite">
             <div className="testimonial-empty"><span>Awaiting verified notes</span><p>No client testimonials are published yet. Genuine quotes can be added here without changing the carousel structure.</p></div>
           </div>
-        </section>
+        </SmoothSection>
 
-        <section className="experience-section section-shell reveal-on-scroll" aria-labelledby="experience-title">
+        <SmoothSection ref={experienceRef} state={experienceState} className="experience-section section-shell" aria-labelledby="experience-title">
           <div className="section-rail"><span>Path so far</span></div>
           <div className="experience-main">
             <p className="section-overline">Education and experience</p>
@@ -443,9 +427,9 @@ export default function Home() {
           <ol className="timeline">
             {timeline.map(([date, role, place]) => <li key={role}><time>{date}</time><strong>{role}</strong><span>{place}</span></li>)}
           </ol>
-        </section>
+        </SmoothSection>
 
-        <section className="contact-section reveal-on-scroll" id="contact" aria-labelledby="contact-title">
+        <SmoothSection ref={contactRef} state={contactState} className="contact-section" id="contact" aria-labelledby="contact-title">
           <div className="contact-heading">
             <p className="section-overline">For projects, ideas, and practical questions</p>
             <h2 id="contact-title">Have a system<br />worth <em>testing?</em></h2>
@@ -476,7 +460,7 @@ export default function Home() {
               <div className="contact-form-actions"><button className="contact-form-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>{isSubmitting ? <LoaderCircle className="submit-spinner" size={16} aria-hidden="true" /> : <ArrowUpRight size={16} />} {isSubmitting ? "Sending..." : "Send message"}</button>{contactFormStatus && <p className="contact-form-status" role="status" aria-live="polite">{contactFormStatus}</p>}</div>
             </form>
           </div>
-        </section>
+        </SmoothSection>
       </main>
 
       {showBackToTop && <button className="back-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top"><ArrowUp size={15} /> <span>Back to top</span></button>}
