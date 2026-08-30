@@ -19,11 +19,11 @@ export function useSectionVisibility(rootMargin = "-15% 0px -15% 0px") {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const ratio = entry.intersectionRatio;
-        if (ratio > 0.5) setState("active");
+        if (ratio > 0.3) setState("active");
         else if (ratio > 0) setState("near");
         else setState("far");
       },
-      { threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin },
+      { threshold: [0, 0.15, 0.3, 0.5, 0.75, 1], rootMargin },
     );
 
     observer.observe(element);
