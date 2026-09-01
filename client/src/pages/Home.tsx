@@ -1,7 +1,7 @@
 // STYLE DIRECTION: Evidence-led field notes — use a quiet personal portrait, real engineering details, restrained vermilion, and documentation-like hierarchy.
 import { ArrowDownRight, ArrowUp, ArrowUpRight, ChevronLeft, ChevronRight, LoaderCircle, Maximize2, Menu, Moon, Sun, X } from "lucide-react";
 import { toast } from "sonner";
-import { type FormEvent, useEffect, useRef, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
@@ -74,21 +74,10 @@ const projects = [
 ] as const;
 
 const projectFilters = ["All", "Control", "Telemetry", "Calibration", "ESP32", "MQTT", "React", "Arduino"] as const;
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/mqevrdnv";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xljebedn";
 const MESSAGE_MAX_LENGTH = 1000;
-const HCAPTCHA_SITE_KEY = import.meta.env.VITE_HCAPTCHA_SITE_KEY as string | undefined;
+const SUBMIT_COOLDOWN_MS = 5000;
 type ProjectFilter = (typeof projectFilters)[number];
-
-type HCaptchaApi = {
-  render: (container: HTMLElement, options: Record<string, unknown>) => string | number;
-  reset: (widgetId?: string | number) => void;
-};
-
-declare global {
-  interface Window {
-    hcaptcha?: HCaptchaApi;
-  }
-}
 
 const practices = [
   {
@@ -143,10 +132,8 @@ export default function Home() {
   const [contactFormStatus, setContactFormStatus] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState("");
-  const [captchaWidgetId, setCaptchaWidgetId] = useState<string | number | null>(null);
+  const [lastSubmitTimestamp, setLastSubmitTimestamp] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const captchaContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const meta = document.querySelector('meta[name="theme-color"]');
@@ -159,45 +146,6 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (!HCAPTCHA_SITE_KEY) return;
-    let cancelled = false;
-    const renderCaptcha = () => {
-      if (cancelled || !window.hcaptcha || !captchaContainerRef.current || captchaWidgetId !== null) return;
-      const widgetId = window.hcaptcha.render(captchaContainerRef.current, {
-        sitekey: HCAPTCHA_SITE_KEY,
-        theme: theme === "dark" ? "dark" : "light",
-        size: "compact",
-        callback: (token: string) => setCaptchaToken(token),
-        "expired-callback": () => setCaptchaToken(""),
-        "error-callback": () => {
-          setCaptchaToken("");
-          toast.error("Verification failed", { description: "Please complete the anti-spam check again." });
-        },
-      });
-      setCaptchaWidgetId(widgetId);
-    };
-
-    const existingScript = document.querySelector<HTMLScriptElement>('script[src^="https://js.hcaptcha.com/1/api.js"]');
-    if (window.hcaptcha) {
-      renderCaptcha();
-    } else if (existingScript) {
-      existingScript.addEventListener("load", renderCaptcha);
-    } else {
-      const script = document.createElement("script");
-      script.src = "https://js.hcaptcha.com/1/api.js?render=explicit";
-      script.async = true;
-      script.defer = true;
-      script.addEventListener("load", renderCaptcha);
-      document.head.appendChild(script);
-    }
-
-    return () => {
-      cancelled = true;
-      existingScript?.removeEventListener("load", renderCaptcha);
-    };
-  }, [captchaWidgetId, theme]);
 
   useEffect(() => {
     document.documentElement.classList.add("motion-ready");
@@ -229,12 +177,11 @@ export default function Home() {
       toast.error("Check your email", { description: "Use a format such as name@example.com." });
       return;
     }
-    if (!HCAPTCHA_SITE_KEY) {
-      toast.error("Spam protection is not configured", { description: "Add the hCaptcha site key before sending messages." });
-      return;
-    }
-    if (!captchaToken) {
-      toast.error("Complete the anti-spam check", { description: "Please verify that you are human before sending." });
+
+    const now = Date.now();
+    if (now - lastSubmitTimestamp < SUBMIT_COOLDOWN_MS) {
+      const waitTime = Math.ceil((SUBMIT_COOLDOWN_MS - (now - lastSubmitTimestamp)) / 1000);
+      toast.error("Message rate limit", { description: `Please wait ${waitTime}s before sending another message.` });
       return;
     }
 
@@ -251,7 +198,6 @@ export default function Home() {
           email: contactForm.email.trim(),
           message: contactForm.message.trim(),
           _subject: `Portfolio inquiry from ${contactForm.name.trim()}`,
-          "h-captcha-response": captchaToken,
         }),
       });
       const payload = await response.json().catch(() => null) as { errors?: Array<{ message?: string }> } | null;
@@ -263,16 +209,13 @@ export default function Home() {
 
       setContactForm({ name: "", email: "", message: "" });
       setEmailError("");
-      setCaptchaToken("");
-      if (captchaWidgetId !== null) window.hcaptcha?.reset(captchaWidgetId);
       setContactFormStatus("Message sent successfully.");
+      setLastSubmitTimestamp(Date.now());
       toast.dismiss(loadingToast);
       toast.success("Message sent", { description: "Thank you. Arif will get back to you soon." });
     } catch (error) {
       const detail = error instanceof Error ? error.message : "Please try again in a moment.";
       setContactFormStatus("Message could not be sent.");
-      if (captchaWidgetId !== null) window.hcaptcha?.reset(captchaWidgetId);
-      setCaptchaToken("");
       toast.dismiss(loadingToast);
       toast.error("Message not sent", { description: detail });
     } finally {
@@ -448,15 +391,6 @@ export default function Home() {
               <label className="contact-field"><span>Name</span><input type="text" name="name" autoComplete="name" placeholder="Your name" value={contactForm.name} onChange={(event) => setContactForm((current) => ({ ...current, name: event.target.value }))} required /></label>
               <label className="contact-field"><span>Email</span><input id="contact-email" type="email" name="email" autoComplete="email" placeholder="you@example.com" value={contactForm.email} aria-invalid={Boolean(emailError)} aria-describedby={emailError ? "contact-email-error" : undefined} onChange={(event) => { const value = event.target.value; setContactForm((current) => ({ ...current, email: value })); setEmailError(value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()) ? "Please enter a valid email address." : ""); }} onBlur={(event) => { const value = event.target.value.trim(); setEmailError(value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "Please enter a valid email address." : ""); }} required />{emailError && <span id="contact-email-error" className="contact-field-error" role="alert">{emailError}</span>}</label>
               <label className="contact-field"><span>Message</span><textarea name="message" placeholder="Tell me what you are working on..." value={contactForm.message} maxLength={MESSAGE_MAX_LENGTH} aria-describedby="message-count" onChange={(event) => setContactForm((current) => ({ ...current, message: event.target.value }))} required /><span id="message-count" className={`message-count${remainingCharacters < 100 ? " is-near-limit" : ""}`} aria-live="polite">{remainingCharacters} characters remaining</span></label>
-              {HCAPTCHA_SITE_KEY ? (
-                <div className="captcha-block">
-                  <div ref={captchaContainerRef} className="captcha-widget" aria-label="Anti-spam verification" />
-                </div>
-              ) : (
-                <p className="captcha-setup-note" role="note">
-                  Anti-spam verification is pending configuration.
-                </p>
-              )}
               <div className="contact-form-actions"><button className="contact-form-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>{isSubmitting ? <LoaderCircle className="submit-spinner" size={16} aria-hidden="true" /> : <ArrowUpRight size={16} />} {isSubmitting ? "Sending..." : "Send message"}</button>{contactFormStatus && <p className="contact-form-status" role="status" aria-live="polite">{contactFormStatus}</p>}</div>
             </form>
           </div>
