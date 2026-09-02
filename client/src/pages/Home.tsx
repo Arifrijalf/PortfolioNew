@@ -73,7 +73,7 @@ const projects = [
   },
 ] as const;
 
-const projectFilters = ["All", "Control", "Telemetry", "Calibration", "ESP32", "MQTT", "React", "Arduino"] as const;
+const projectFilters = ["All", "Arduino", "Calibration", "Control", "ESP32", "MQTT", "P.Mikro", "React", "Telemetry"] as const;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xljebedn";
 const MESSAGE_MAX_LENGTH = 1000;
 const SUBMIT_COOLDOWN_MS = 5000;
