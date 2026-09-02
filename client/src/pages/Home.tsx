@@ -185,6 +185,7 @@ export default function Home() {
       return;
     }
 
+    setLastSubmitTimestamp(now);
     setIsSubmitting(true);
     setContactFormStatus("Sending your message...");
     const loadingToast = toast.loading("Sending message", { description: "Connecting to the contact form..." });
@@ -210,7 +211,6 @@ export default function Home() {
       setContactForm({ name: "", email: "", message: "" });
       setEmailError("");
       setContactFormStatus("Message sent successfully.");
-      setLastSubmitTimestamp(Date.now());
       toast.dismiss(loadingToast);
       toast.success("Message sent", { description: "Thank you. Arif will get back to you soon." });
     } catch (error) {
@@ -254,7 +254,7 @@ export default function Home() {
         <section className="opening-slide" id="top" aria-label="Portrait of Arif Rijal Fadilah">
           <div className="opening-canvas">
             <NameMarquee />
-            <img className="opening-photo hero-fade-in" src="/assets/arif-profile-avatar_321c33ab.webp" alt="Arif Rijal Fadilah" />
+            <img className="opening-photo hero-fade-in" src="/assets/arif-profile-avatar_321c33ab.webp" alt="Arif Rijal Fadilah" loading="lazy" width="200" height="200" />
             <p className="opening-context"><span>Electronics Engineering</span><strong>Embedded systems · firmware · IoT telemetry</strong></p>
             <a className="opening-link" href="#about">Read profile <ArrowDownRight size={15} /></a>
           </div>

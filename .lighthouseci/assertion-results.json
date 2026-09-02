@@ -1,0 +1,1382 @@
+[
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-allowed-attr",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-allowed-role",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-command-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-conditional-attr",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-deprecated-role",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-dialog-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-hidden-body",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-hidden-focus",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-input-field-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-meter-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-progressbar-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-prohibited-attr",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-required-attr",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-required-children",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-required-parent",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-roles",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-text",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-toggle-field-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-tooltip-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-treeitem-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-valid-attr-value",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "aria-valid-attr",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "button-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "clickjacking-mitigation",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "color-contrast",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "crawlable-anchors",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "csp-xss",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "definition-list",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "document-title",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "duplicate-id-aria",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "empty-heading",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "errors-in-console",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.89,
+    "values": [
+      0.89
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "first-contentful-paint",
+    "level": "warn",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "First Contentful Paint",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "font-size",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "forced-reflow-insight",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Forced reflow",
+    "auditDocumentationLink": "https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "form-field-multiple-labels",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "frame-title",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "geolocation-on-start",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "has-hsts",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "heading-order",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "html-has-lang",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "html-lang-valid",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "html-xml-lang-mismatch",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "http-status-code",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "identical-links-same-purpose",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "image-alt",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "image-aspect-ratio",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "image-delivery-insight",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Improve image delivery",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "image-redundant-alt",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "image-size-responsive",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "input-button-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "input-image-alt",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "inspector-issues",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "is-crawlable",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "is-on-https",
+    "level": "warn",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "label-content-name-mismatch",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "landmark-one-main",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.89,
+    "values": [
+      0.89
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "largest-contentful-paint",
+    "level": "warn",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Largest Contentful Paint",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "lcp-discovery-insight",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "LCP request discovery",
+    "auditDocumentationLink": "https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.5,
+    "values": [
+      0.5
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "lcp-lazy-loaded",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Largest Contentful Paint image was lazily loaded",
+    "auditDocumentationLink": "https://web.dev/articles/lcp-lazy-loading"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "link-in-text-block",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "link-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "link-text",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.42,
+    "values": [
+      0.42
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "max-potential-fid",
+    "level": "warn",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Max Potential First Input Delay",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "meta-description",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "meta-refresh",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "meta-viewport",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 1,
+    "values": [
+      1
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "modern-image-formats",
+    "level": "warn",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Serve images in next-gen formats",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "network-dependency-tree-insight",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Network dependency tree",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "notification-on-start",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "object-alt",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 1,
+    "values": [
+      1
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "offscreen-images",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Defer offscreen images",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "origin-isolation",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "paste-preventing-inputs",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "redirects-http",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 1,
+    "values": [
+      1
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "render-blocking-insight",
+    "level": "warn",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Render blocking requests",
+    "auditDocumentationLink": "https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 1,
+    "values": [
+      1
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "render-blocking-resources",
+    "level": "warn",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Eliminate render-blocking resources",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "robots-txt",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "select-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "skip-link",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "table-duplicate-name",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "table-fake-caption",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "target-size",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "td-has-header",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "td-headers-attr",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "th-has-data-cells",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "third-party-cookies",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 1,
+    "values": [
+      1
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "unused-javascript",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Reduce unused JavaScript",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 3,
+    "values": [
+      3
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "uses-responsive-images",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/",
+    "auditTitle": "Properly size images",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "valid-lang",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "valid-source-maps",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "video-caption",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "accesskeys",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "bypass",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "canonical",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "charset",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "deprecations",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "dlitem",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "doctype",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "hreflang",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "label",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "list",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "listitem",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  },
+  {
+    "name": "auditRan",
+    "expected": 1,
+    "actual": 0,
+    "values": [
+      0
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditId": "tabindex",
+    "level": "error",
+    "url": "http://127.0.0.1:4175/"
+  }
+]
