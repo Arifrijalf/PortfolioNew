@@ -397,7 +397,7 @@ export default function Home() {
         </SmoothSection>
       </main>
 
-      {showBackToTop && <button className="back-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top"><ArrowUp size={15} /> <span>Back to top</span></button>}
+      {showBackToTop && <button className="back-to-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top"><ArrowUp size={15} /></button>}
 
       <Dialog open={Boolean(detailProject)} onOpenChange={(open) => !open && setDetailProject(null)}>
         <DialogContent className="project-dialog" showCloseButton={false}>
@@ -449,7 +449,6 @@ export default function Home() {
       <footer className="site-footer">
         <span className="footer-identity"><span className="footer-mark" aria-hidden="true"><span className="signal-symbol"><i /><i /><i /></span></span><span>© 2026 ARIF RIJAL FADHILAH</span></span>
         <span>BUILT FROM NOTES, TESTS, AND ITERATION</span>
-        <a href="#top">Back to top</a>
       </footer>
     </div>
   );
