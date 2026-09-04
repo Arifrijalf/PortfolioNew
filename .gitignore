@@ -111,3 +111,13 @@ temp/
 
 # Manus version file (auto-generated, not part of source)
 .project-config.json
+
+# Local tool data
+.code-review-graph/
+
+# Python virtualenv
+venv/
+
+# Lighthouse reports (generated)
+report.html
+report.json

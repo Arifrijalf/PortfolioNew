@@ -11,7 +11,7 @@ const projects = [
   {
     title: "Smart Baby Incubator",
     type: "ESP32 / PID CONTROL",
-    category: "Control",
+    category: "College Projects",
     technologies: ["ESP32", "PID"],
     note: "Thermal control record",
     repo: "https://github.com/Arifrijalf/InkubatorBayi",
@@ -32,7 +32,7 @@ const projects = [
   {
     title: "ESP32 IoT Monitoring Dashboard",
     type: "MQTT / REACT / TELEMETRY",
-    category: "Telemetry",
+    category: "ESP",
     technologies: ["ESP32", "MQTT", "React"],
     note: "Telemetry record",
     repo: "https://github.com/Arifrijalf/Dashboard-cloudflare",
@@ -53,7 +53,7 @@ const projects = [
   {
     title: "Universal Sensor Diagnostic Tool",
     type: "ARDUINO / ESP32 / CALIBRATION",
-    category: "Calibration",
+    category: "Arduino",
     technologies: ["Arduino", "ESP32"],
     note: "Sensor test record",
     repo: "https://github.com/Arifrijalf/Program-Calibration-Sensor",
@@ -73,7 +73,7 @@ const projects = [
   },
 ] as const;
 
-const projectFilters = ["All", "Arduino", "Calibration", "Control", "ESP32", "MQTT", "P.Mikro", "React", "Telemetry"] as const;
+const projectFilters = ["All", "Arduino", "ESP", "College Projects"] as const;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xljebedn";
 const MESSAGE_MAX_LENGTH = 1000;
 const SUBMIT_COOLDOWN_MS = 5000;
@@ -120,7 +120,6 @@ export default function Home() {
   const { ref: aboutRef, state: aboutState } = useSectionVisibility();
   const { ref: workRef, state: workState } = useSectionVisibility();
   const { ref: practiceRef, state: practiceState } = useSectionVisibility();
-  const { ref: testimonialsRef, state: testimonialsState } = useSectionVisibility();
   const { ref: experienceRef, state: experienceState } = useSectionVisibility();
   const { ref: contactRef, state: contactState } = useSectionVisibility();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -212,7 +211,7 @@ export default function Home() {
       setEmailError("");
       setContactFormStatus("Message sent successfully.");
       toast.dismiss(loadingToast);
-      toast.success("Message sent", { description: "Thank you. Arif will get back to you soon." });
+      toast.success("Message sent", { description: "Thanks for reaching out. I'll get back to you soon." });
     } catch (error) {
       const detail = error instanceof Error ? error.message : "Please try again in a moment.";
       setContactFormStatus("Message could not be sent.");
@@ -246,7 +245,7 @@ export default function Home() {
           <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}>
             {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <a className="header-cta" href="#contact" onClick={closeMenu}>Get in touch <ArrowUpRight size={15} /></a>
+          <a className="header-cta" href="#contact" onClick={closeMenu}>Say hello <ArrowUpRight size={15} /></a>
         </div>
       </header>
 
@@ -305,7 +304,7 @@ export default function Home() {
                     <span className="image-hover-description">{project.description}</span>
                     <span className="image-hover-cue"><Maximize2 size={15} /> View gallery</span>
                   </button>
-                  <a className="image-hover-detail" href={project.repo} target="_blank" rel="noreferrer">Lihat detail <ArrowUpRight size={14} /></a>
+                  <a className="image-hover-detail" href={project.repo} target="_blank" rel="noreferrer">View details <ArrowUpRight size={14} /></a>
                   <span className="evidence-label">{project.note}</span>
                   <dl>
                     {project.evidence.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
@@ -316,7 +315,7 @@ export default function Home() {
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
                   <div className="project-actions">
-                    <button className="project-detail-button" type="button" onClick={() => setDetailProject(project)}>Lihat detail <ArrowUpRight size={15} /></button>
+                    <button className="project-detail-button" type="button" onClick={() => setDetailProject(project)}>View details <ArrowUpRight size={15} /></button>
                     <a href={project.repo} target="_blank" rel="noreferrer" className="project-link">Open repository <ArrowUpRight size={15} /></a>
                   </div>
                 </div>
@@ -346,20 +345,6 @@ export default function Home() {
           </div>
         </SmoothSection>
 
-        <SmoothSection ref={testimonialsRef} state={testimonialsState} className="testimonials-section section-shell" aria-labelledby="testimonials-title">
-          <div className="section-heading">
-            <div className="section-rail"><span>Client notes</span></div>
-            <div>
-              <p className="section-overline">Verified feedback</p>
-              <h2 id="testimonials-title">Proof from<br /><em>the people.</em></h2>
-            </div>
-            <p className="section-intro">This space is reserved for real client notes with clear attribution and permission to publish.</p>
-          </div>
-          <div className="testimonial-carousel" aria-live="polite">
-            <div className="testimonial-empty"><span>Awaiting verified notes</span><p>No client testimonials are published yet. Genuine quotes can be added here without changing the carousel structure.</p></div>
-          </div>
-        </SmoothSection>
-
         <SmoothSection ref={experienceRef} state={experienceState} className="experience-section section-shell" aria-labelledby="experience-title">
           <div className="section-rail"><span>Path so far</span></div>
           <div className="experience-main">
@@ -375,8 +360,8 @@ export default function Home() {
         <SmoothSection ref={contactRef} state={contactState} className="contact-section" id="contact" aria-labelledby="contact-title">
           <div className="contact-heading">
             <p className="section-overline">For projects, ideas, and practical questions</p>
-            <h2 id="contact-title">Have a system<br />worth <em>testing?</em></h2>
-            <a className="contact-cta" href="mailto:arifrijalfadhilah@gmail.com">Start a conversation <ArrowUpRight size={19} /></a>
+            <h2 id="contact-title">Got a project<br />worth <em>building?</em></h2>
+            <a className="contact-cta" href="mailto:arifrijalfadhilah@gmail.com">Drop me a line <ArrowUpRight size={19} /></a>
           </div>
           <div className="contact-grid">
             <div><span>Email</span><a href="mailto:arifrijalfadhilah@gmail.com">arifrijalfadhilah@gmail.com</a></div>
@@ -386,12 +371,12 @@ export default function Home() {
             <div><span>LinkedIn</span><a href="https://linkedin.com/in/arif-rijal-fadhilah" target="_blank" rel="noreferrer">arif-rijal-fadhilah <ArrowUpRight size={13} /></a></div>
           </div>
           <div className="contact-form-shell">
-            <div className="contact-form-intro"><span>Direct note</span><h3>Send a question<br />or a project brief.</h3><p>This form sends your note directly through Formspree, so no email app is required.</p></div>
+            <div className="contact-form-intro"><span>Drop a note</span><h3>Got a question<br />or an idea?</h3><p>Shoot me a quick message here. I'll get back to you soon.</p></div>
             <form className="contact-form" onSubmit={handleContactSubmit}>
-              <label className="contact-field"><span>Name</span><input type="text" name="name" autoComplete="name" placeholder="Your name" value={contactForm.name} onChange={(event) => setContactForm((current) => ({ ...current, name: event.target.value }))} required /></label>
+              <label className="contact-field"><span>Name</span><input type="text" name="name" autoComplete="name" placeholder="What's your name?" value={contactForm.name} onChange={(event) => setContactForm((current) => ({ ...current, name: event.target.value }))} required /></label>
               <label className="contact-field"><span>Email</span><input id="contact-email" type="email" name="email" autoComplete="email" placeholder="you@example.com" value={contactForm.email} aria-invalid={Boolean(emailError)} aria-describedby={emailError ? "contact-email-error" : undefined} onChange={(event) => { const value = event.target.value; setContactForm((current) => ({ ...current, email: value })); setEmailError(value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()) ? "Please enter a valid email address." : ""); }} onBlur={(event) => { const value = event.target.value.trim(); setEmailError(value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "Please enter a valid email address." : ""); }} required />{emailError && <span id="contact-email-error" className="contact-field-error" role="alert">{emailError}</span>}</label>
-              <label className="contact-field"><span>Message</span><textarea name="message" placeholder="Tell me what you are working on..." value={contactForm.message} maxLength={MESSAGE_MAX_LENGTH} aria-describedby="message-count" onChange={(event) => setContactForm((current) => ({ ...current, message: event.target.value }))} required /><span id="message-count" className={`message-count${remainingCharacters < 100 ? " is-near-limit" : ""}`} aria-live="polite">{remainingCharacters} characters remaining</span></label>
-              <div className="contact-form-actions"><button className="contact-form-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>{isSubmitting ? <LoaderCircle className="submit-spinner" size={16} aria-hidden="true" /> : <ArrowUpRight size={16} />} {isSubmitting ? "Sending..." : "Send message"}</button>{contactFormStatus && <p className="contact-form-status" role="status" aria-live="polite">{contactFormStatus}</p>}</div>
+              <label className="contact-field"><span>Message</span><textarea name="message" placeholder="Tell me what you're working on..." value={contactForm.message} maxLength={MESSAGE_MAX_LENGTH} aria-describedby="message-count" onChange={(event) => setContactForm((current) => ({ ...current, message: event.target.value }))} required /><span id="message-count" className={`message-count${remainingCharacters < 100 ? " is-near-limit" : ""}`} aria-live="polite">{remainingCharacters} characters remaining</span></label>
+              <div className="contact-form-actions"><button className="contact-form-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>{isSubmitting ? <LoaderCircle className="submit-spinner" size={16} aria-hidden="true" /> : <ArrowUpRight size={16} />} {isSubmitting ? "Sending..." : "Send it"}</button>{contactFormStatus && <p className="contact-form-status" role="status" aria-live="polite">{contactFormStatus}</p>}</div>
             </form>
           </div>
         </SmoothSection>
