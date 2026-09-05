@@ -1,11 +1,14 @@
 // STYLE DIRECTION: Evidence-led field notes — calm editorial structure, warm paper surfaces, and verified engineering details over decorative effects.
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
+import { Suspense, lazy } from "react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+
+const Toaster = lazy(() =>
+  import("@/components/ui/sonner").then((module) => ({ default: module.Toaster })),
+);
+const NotFound = lazy(() => import("@/pages/NotFound"));
 
 function Router() {
   return (
@@ -20,10 +23,10 @@ export default function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light" switchable>
-        <TooltipProvider>
+        <Suspense fallback={<div style={{ minHeight: "100svh" }} aria-hidden="true" />}>
           <Toaster />
           <Router />
-        </TooltipProvider>
+        </Suspense>
       </ThemeProvider>
     </ErrorBoundary>
   );

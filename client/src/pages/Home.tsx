@@ -36,10 +36,10 @@ const projects = [
     technologies: ["ESP32", "MQTT", "React"],
     note: "Telemetry record",
     repo: "https://github.com/Arifrijalf/Dashboard-cloudflare",
-    image: "/assets/esp32-iot-dashboard-control-center_894421e8.png",
+    image: "/assets/esp32-iot-dashboard-control-center_894421e8.webp",
     imageAlt: "Steel Plant Control Center monitoring screen for the ESP32 IoT dashboard project",
     gallery: [
-      { src: "/assets/esp32-iot-dashboard-control-center_894421e8.png", alt: "Steel Plant Control Center monitoring screen", caption: "Live monitoring and relay-control view" },
+      { src: "/assets/esp32-iot-dashboard-control-center_894421e8.webp", alt: "Steel Plant Control Center monitoring screen", caption: "Live monitoring and relay-control view" },
       { src: "/assets/esp32-iot-dashboard_777f1689.webp", alt: "ESP32 IoT dashboard shown on a tablet in a workspace", caption: "Dashboard interface in a connected hardware workspace" },
     ],
     description:
@@ -61,7 +61,7 @@ const projects = [
     imageAlt: "ESP32 development board pinout reference used by the sensor diagnostic tool",
     gallery: [
       { src: "/assets/sensor-tool-esp32-pinout_4f764215.webp", alt: "ESP32 development board pinout reference", caption: "ESP32 pinout reference for sensor wiring and testing" },
-      { src: "/assets/sensor-tool-arduino-pinout_9f93273c.png", alt: "Arduino Uno pinout reference", caption: "Arduino Uno pinout reference for cross-platform sensor checks" },
+      { src: "/assets/sensor-tool-arduino-pinout_9f93273c.webp", alt: "Arduino Uno pinout reference", caption: "Arduino Uno pinout reference for cross-platform sensor checks" },
     ],
     description:
       "A practical tool for fast sensor sanity checks and calibration across Arduino Uno and ESP32, covering ultrasonic, servo, analog, and digital modules.",
@@ -253,7 +253,7 @@ export default function Home() {
         <section className="opening-slide" id="top" aria-label="Portrait of Arif Rijal Fadilah">
           <div className="opening-canvas">
             <NameMarquee />
-            <img className="opening-photo hero-fade-in" src="/assets/arif-profile-avatar_321c33ab.webp" alt="Arif Rijal Fadilah" loading="lazy" width="200" height="200" />
+            <img className="opening-photo hero-fade-in" src="/assets/arif-profile-avatar_321c33ab.webp" alt="Arif Rijal Fadilah" loading="eager" fetchPriority="high" decoding="async" width="630" height="665" />
             <p className="opening-context"><span>Electronics Engineering</span><strong>Embedded systems · firmware · IoT telemetry</strong></p>
             <a className="opening-link" href="#about">Read profile <ArrowDownRight size={15} /></a>
           </div>
@@ -300,7 +300,7 @@ export default function Home() {
               <article className={`project-card project-card-${projectIndex + 1}`} key={project.title}>
                 <div className="project-evidence" aria-label={`${project.title} project evidence`}>
                   <button className="project-image-trigger" type="button" onClick={() => openLightbox(project)} aria-label={`Open ${project.title} image gallery`}>
-                    <img className="project-screenshot" src={project.image} alt={project.imageAlt} />
+                    <img className="project-screenshot" src={project.image} alt={project.imageAlt} loading="lazy" decoding="async" width="800" height="600" sizes="(max-width: 760px) 100vw, 50vw" />
                     <span className="image-hover-description">{project.description}</span>
                     <span className="image-hover-cue"><Maximize2 size={15} /> View gallery</span>
                   </button>
@@ -396,7 +396,7 @@ export default function Home() {
               <div className="modal-gallery">
                 {detailProject.gallery.map((image, imageIndex) => (
                   <button type="button" className="modal-gallery-item" key={image.src} onClick={() => openLightbox(detailProject, imageIndex)}>
-                    <img src={image.src} alt={image.alt} />
+                    <img src={image.src} alt={image.alt} loading="lazy" decoding="async" width="800" height="450" />
                     <span>{image.caption}<Maximize2 size={14} /></span>
                   </button>
                 ))}
@@ -422,7 +422,7 @@ export default function Home() {
               </div>
               <div className="lightbox-stage">
                 {lightbox.project.gallery.length > 1 && <button className="lightbox-nav lightbox-previous" type="button" onClick={() => shiftLightbox(-1)} aria-label="Previous image"><ChevronLeft size={22} /></button>}
-                <img src={lightbox.project.gallery[lightbox.index].src} alt={lightbox.project.gallery[lightbox.index].alt} />
+                <img src={lightbox.project.gallery[lightbox.index].src} alt={lightbox.project.gallery[lightbox.index].alt} decoding="async" width="1200" height="675" />
                 {lightbox.project.gallery.length > 1 && <button className="lightbox-nav lightbox-next" type="button" onClick={() => shiftLightbox(1)} aria-label="Next image"><ChevronRight size={22} /></button>}
               </div>
               <p className="lightbox-caption">{lightbox.project.gallery[lightbox.index].caption}</p>
