@@ -16,6 +16,9 @@ const projects = [
     note: "Thermal control record",
     repo: "https://github.com/Arifrijalf/InkubatorBayi",
     image: "/assets/smart-baby-incubator_270318b2.webp",
+    imageSrcSet: "/assets/smart-baby-incubator_270318b2_480.webp 480w, /assets/smart-baby-incubator_270318b2.webp 512w",
+    imageWidth: 512,
+    imageHeight: 279,
     imageAlt: "Smart Baby Incubator prototype with an integrated PID control display",
     gallery: [
       { src: "/assets/smart-baby-incubator_270318b2.webp", alt: "Smart Baby Incubator prototype with PID control display", caption: "Prototype and integrated control display" },
@@ -37,6 +40,9 @@ const projects = [
     note: "Telemetry record",
     repo: "https://github.com/Arifrijalf/Dashboard-cloudflare",
     image: "/assets/esp32-iot-dashboard-control-center_894421e8.webp",
+    imageSrcSet: "/assets/esp32-iot-dashboard-control-center_894421e8_480.webp 480w, /assets/esp32-iot-dashboard-control-center_894421e8_800.webp 800w, /assets/esp32-iot-dashboard-control-center_894421e8.webp 1200w",
+    imageWidth: 1200,
+    imageHeight: 695,
     imageAlt: "Steel Plant Control Center monitoring screen for the ESP32 IoT dashboard project",
     gallery: [
       { src: "/assets/esp32-iot-dashboard-control-center_894421e8.webp", alt: "Steel Plant Control Center monitoring screen", caption: "Live monitoring and relay-control view" },
@@ -58,6 +64,9 @@ const projects = [
     note: "Sensor test record",
     repo: "https://github.com/Arifrijalf/Program-Calibration-Sensor",
     image: "/assets/sensor-tool-esp32-pinout_4f764215.webp",
+    imageSrcSet: "/assets/sensor-tool-esp32-pinout_4f764215_480.webp 480w, /assets/sensor-tool-esp32-pinout_4f764215_800.webp 800w, /assets/sensor-tool-esp32-pinout_4f764215.webp 1024w",
+    imageWidth: 1024,
+    imageHeight: 1024,
     imageAlt: "ESP32 development board pinout reference used by the sensor diagnostic tool",
     gallery: [
       { src: "/assets/sensor-tool-esp32-pinout_4f764215.webp", alt: "ESP32 development board pinout reference", caption: "ESP32 pinout reference for sensor wiring and testing" },
@@ -225,7 +234,7 @@ export default function Home() {
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="brand-lockup" href="#top" onClick={closeMenu} aria-label="ARIF RIJAL FADHILAH home">
+        <a className="brand-lockup" href="#top" onClick={closeMenu} aria-label="ARIF RIJAL FADHILAH">
           <span className="brand-mark" aria-hidden="true"><span className="signal-symbol"><i /><i /><i /></span></span>
           <span className="brand-wordmark"><strong>ARIF</strong><small>RIJAL FADHILAH</small></span>
         </a>
@@ -249,11 +258,11 @@ export default function Home() {
         </div>
       </header>
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section className="opening-slide" id="top" aria-label="Portrait of Arif Rijal Fadilah">
           <div className="opening-canvas">
             <NameMarquee />
-            <img className="opening-photo hero-fade-in" src="/assets/arif-profile-avatar_321c33ab.webp" alt="Arif Rijal Fadilah" loading="eager" fetchPriority="high" decoding="async" width="630" height="665" />
+            <img className="opening-photo" src="/assets/arif-profile-avatar_321c33ab.webp" srcSet="/assets/arif-profile-avatar_321c33ab_480.webp 480w, /assets/arif-profile-avatar_321c33ab_1024.webp 1024w, /assets/arif-profile-avatar_321c33ab.webp 2048w" sizes="(max-width: 760px) 88vw, min(74vw, 630px)" alt="Arif Rijal Fadilah" loading="eager" fetchPriority="high" decoding="async" width="630" height="665" />
             <p className="opening-context"><span>Electronics Engineering</span><strong>Embedded systems · firmware · IoT telemetry</strong></p>
             <a className="opening-link" href="#about">Read profile <ArrowDownRight size={15} /></a>
           </div>
@@ -300,7 +309,7 @@ export default function Home() {
               <article className={`project-card project-card-${projectIndex + 1}`} key={project.title}>
                 <div className="project-evidence" aria-label={`${project.title} project evidence`}>
                   <button className="project-image-trigger" type="button" onClick={() => openLightbox(project)} aria-label={`Open ${project.title} image gallery`}>
-                    <img className="project-screenshot" src={project.image} alt={project.imageAlt} loading="lazy" decoding="async" width="800" height="600" sizes="(max-width: 760px) 100vw, 50vw" />
+                    <img className="project-screenshot" src={project.image} srcSet={project.imageSrcSet} alt={project.imageAlt} loading="lazy" decoding="async" width={project.imageWidth} height={project.imageHeight} sizes="(max-width: 760px) 100vw, 50vw" />
                     <span className="image-hover-description">{project.description}</span>
                     <span className="image-hover-cue"><Maximize2 size={15} /> View gallery</span>
                   </button>

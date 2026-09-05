@@ -1,4 +1,5 @@
 /* STYLE DIRECTION: Evidence-led field notes — warm paper, quiet charcoal, restrained Signal Vermilion, and documentation-like engineering hierarchy. */
+@import "./fonts.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -15,6 +16,7 @@
   left: 1rem;
   top: 1rem;
 }
+#main-content:focus { outline: none; }
 
 @custom-variant dark (&:is(.dark *));
 
@@ -24,7 +26,7 @@
   --ink: #191917;
   --ink-soft: #65615a;
   --line: color-mix(in srgb, var(--ink) 18%, transparent);
-  --accent: #dc4b2c;
+  --accent: #bb3a1c;
   --slate: #232321;
   --slate-fg: #f4f0e8;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -39,6 +41,7 @@
 .dark {
   --paper: #171715;
   --paper-deep: #22221f;
+  --accent: #e2592f;
   --ink: #f2eee5;
   --ink-soft: #bdb8ad;
   --line: color-mix(in srgb, var(--ink) 20%, transparent);
