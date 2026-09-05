@@ -16,5 +16,16 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    assetsInlineLimit: 4096,
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "wouter"],
+          radix: ["@radix-ui/react-dialog", "@radix-ui/react-slot"],
+          sonner: ["sonner"],
+        },
+      },
+    },
   },
 });
