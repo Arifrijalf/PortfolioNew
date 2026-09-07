@@ -589,9 +589,9 @@ export default function Home() {
                       >
                         View details <ArrowUpRight size={15} />
                       </button>
-                      {(project as any).slug && (
+                      {"slug" in project && project.slug && (
                         <Link
-                          href={`/progress-microcontroller/${(project as any).slug}`}
+                          href={`/progress-microcontroller/${project.slug}`}
                           className="project-link bg-[var(--ink)] text-[var(--paper)]"
                         >
                           Progress Log <ArrowUpRight size={15} />

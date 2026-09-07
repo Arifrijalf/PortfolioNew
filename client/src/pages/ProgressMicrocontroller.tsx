@@ -95,7 +95,9 @@ export default function ProgressMicrocontroller() {
                   </dl>
                 </div>
                 <div className="project-copy">
-                  <p className="project-type">{project.type}</p>
+                  <p className="project-type">
+                    Project {index + 1} — {project.type}
+                  </p>
                   <h3>{project.title}</h3>
                   <p>{project.summary}</p>
                   <div className="project-actions">
