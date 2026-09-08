@@ -4,6 +4,7 @@ import { projects } from "@/data/microcontrollerProgress";
 import { Mermaid } from "@/components/Mermaid";
 import { SmoothSection } from "@/components/SmoothSection";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
+import { FanSimulation } from "@/components/FanSimulation";
 
 export default function ProgressDetail() {
   const { slug } = useParams();
@@ -24,10 +25,11 @@ export default function ProgressDetail() {
             </h1>
             <Link
               href="/progress-microcontroller"
-              className="project-detail-button"
-            >
-              <ArrowLeft size={15} /> Back to logs
-            </Link>
+                      className="project-detail-button"
+                      aria-label="View full log for this project"
+                    >
+                      View full log <ArrowUpRight size={15} />
+                    </Link>
           </div>
         </main>
       </div>
@@ -86,6 +88,7 @@ export default function ProgressDetail() {
                 href={project.repo}
                 target="_blank"
                 rel="noreferrer"
+                aria-label="View GitHub Repository"
                 className="header-cta bg-[var(--ink)] text-[var(--paper)]"
               >
                 <Github size={15} /> GitHub Repository{" "}
@@ -96,6 +99,7 @@ export default function ProgressDetail() {
                   href={project.driveUrl}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="View project report on Google Drive"
                   className="header-cta drive-cta"
                 >
                   <FileText size={15} /> Report (Drive){" "}
@@ -197,6 +201,7 @@ export default function ProgressDetail() {
                   Flowchart
                 </h3>
                 <Mermaid chart={project.mermaidFlowchart} />
+              {project.slug === "ds18b20-3-speed-fan" && <FanSimulation />}
               </div>
               <div>
                 <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
