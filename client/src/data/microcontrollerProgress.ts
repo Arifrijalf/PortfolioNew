@@ -99,25 +99,23 @@ config:
   layout: elk
   flowchart:
     curve: stepBefore
-    nodeSpacing: 40
-    rankSpacing: 70
+    nodeSpacing: 50
+    rankSpacing: 80
 ---
 flowchart TD
-    A[Start] --> B[Initialize ESP32,<br>DS18B20, and PWM]
-    B --> C[Read Temperature<br>from DS18B20]
-    C --> D{Is Temperature <br>< 25°C?}
+    A[Start] --> B[Initialize ESP32, DS18B20, and PWM]
+    B --> C[Read Temperature from DS18B20]
+    C --> D{Is Temperature < 25°C?}
     
-    D -- Yes (bottom) --> E[&nbsp;PWM = 0<br>Fan Off&nbsp;]
-    D -- No (right) --> F[&nbsp;Calculate PWM<br>Linearly 25-40°C → 0-255&nbsp;]
+    D -- "Yes" --> E[PWM = 0<br>Fan Off]
+    D -- "No" --> F[Calculate PWM Linearly<br>25-40°C → 0-255]
     
-    E --> G[Send PWM Signal<br>to MOSFET]
+    E --> G[Send PWM Signal to MOSFET]
     F --> G
     
-    G --> H[Display Data to<br>Serial Monitor<br>Temp, PWM, Status]
+    G --> H[Display Data to Serial Monitor<br>Temperature, PWM, Status]
     H --> I[Delay 1 Second]
-    I --> C
-
-`,
+    I -->|Loop back| C`,
     mermaidBlock: `---
 config:
   layout: elk
