@@ -94,29 +94,38 @@ export const projects: ProgressProject[] = [
       deployment:
         "Local standalone embedded system. 12V rail isolated from the ESP32; common GND across ESP32, sensor, MOSFET, and adapter is required.",
     },
-    mermaidFlowchart: `%%{init: {"flowchart": {"curve": "stepBefore"}}}%%
+    mermaidFlowchart: `---
+config:
+  layout: elk
+  flowchart:
+    curve: stepBefore
+    nodeSpacing: 40
+    rankSpacing: 70
+---
 flowchart TD
-  A[Start]
-  B[Initialize ESP32, DS18B20, and PWM]
-  C[Read Temperature from DS18B20]
-  D{Is Temperature < 25°C?}
-  E[PWM = 0<br>Fan Off]
-  F[Calculate PWM Linearly<br>25-40°C → 0-255]
-  G[Send PWM Signal to MOSFET]
-  H[Display Data to Serial Monitor<br>Temperature, PWM, Status]
-  I[Delay 1 Second]
+    A[Start] --> B[Initialize ESP32,<br>DS18B20, and PWM]
+    B --> C[Read Temperature<br>from DS18B20]
+    C --> D{Is Temperature <br>< 25°C?}
+    
+    D -- Yes (bottom) --> E[&nbsp;PWM = 0<br>Fan Off&nbsp;]
+    D -- No (right) --> F[&nbsp;Calculate PWM<br>Linearly 25-40°C → 0-255&nbsp;]
+    
+    E --> G[Send PWM Signal<br>to MOSFET]
+    F --> G
+    
+    G --> H[Display Data to<br>Serial Monitor<br>Temp, PWM, Status]
+    H --> I[Delay 1 Second]
+    I --> C
 
-  A --> B
-  B --> C
-  C --> D
-  D -- Yes --> E
-  D -- No --> F
-  E --> G
-  F --> G
-  G --> H
-  H --> I
-  I --> C`,
-    mermaidBlock: `%%{init: {"flowchart": {"curve": "stepBefore"}}}%%
+`,
+    mermaidBlock: `---
+config:
+  layout: elk
+  flowchart:
+    curve: stepBefore
+    nodeSpacing: 50
+    rankSpacing: 90
+---
 flowchart LR
   subgraph Input
     A[Temperature Sensor<br>DS18B20]
