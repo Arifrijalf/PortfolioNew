@@ -94,26 +94,51 @@ export const projects: ProgressProject[] = [
       deployment:
         "Local standalone embedded system. 12V rail isolated from the ESP32; common GND across ESP32, sensor, MOSFET, and adapter is required.",
     },
-    mermaidFlowchart: `flowchart TD
-  A[Start] --> B[Read DS18B20 on GPIO 4 every 1s]
-  B --> C{Sensor disconnected?}
-  C -- Yes --> D[Fan OFF, PWM 0]
-  C -- No --> E[Apply hysteresis: ON at 25.5, OFF below 24.5]
-  E --> F{Temp at 35 or above?}
-  F -- Yes --> G[Speed 3, PWM 255]
-  F -- No --> H{Temp at 30 or above?}
-  H -- Yes --> I[Speed 2, PWM 170]
-  H -- No --> J{Fan latched ON?}
-  J -- Yes --> K[Speed 1, PWM 85]
-  J -- No --> D
-  D & G & I & K --> L[LEDC write 25 kHz plus serial log]
-  L --> B`,
-    mermaidBlock: `flowchart LR
-  S[DS18B20 Temp] -->|GPIO 4, OneWire| MCU[ESP32]
-  MCU -->|GPIO 15, PWM 25kHz| MOS[IRLZ44N MOSFET]
-  MOS --> FAN[12V DC Fan]
-  DIODE[1N4007 Flyback] -.-> MOS
-  MCU --> SER[Serial Monitor 115200]`,
+    mermaidFlowchart: `%%{init: {"flowchart": {"curve": "stepBefore"}}}%%
+flowchart TD
+  A[Start]
+  B[Initialize ESP32, DS18B20, and PWM]
+  C[Read Temperature from DS18B20]
+  D{Is Temperature < 25°C?}
+  E[PWM = 0<br>Fan Off]
+  F[Calculate PWM Linearly<br>25-40°C → 0-255]
+  G[Send PWM Signal to MOSFET]
+  H[Display Data to Serial Monitor<br>Temperature, PWM, Status]
+  I[Delay 1 Second]
+
+  A --> B
+  B --> C
+  C --> D
+  D -- Yes --> E
+  D -- No --> F
+  E --> G
+  F --> G
+  G --> H
+  H --> I
+  I --> C`,
+    mermaidBlock: `%%{init: {"flowchart": {"curve": "stepBefore"}}}%%
+flowchart LR
+  subgraph Input
+    A[Temperature Sensor<br>DS18B20]
+  end
+
+  subgraph Process
+    B[ESP32<br>Reads temperature data<br>Calculates PWM<br>Linear Mapping]
+  end
+
+  subgraph Output
+    C[MOSFET IRLZ44N<br>PWM Driver]
+    D[12V DC Fan]
+  end
+
+  A -- "Digital temperature data (1-Wire)" --> B
+  B -- "PWM signal (GPIO 15)" --> C
+  C -- "Controlled 12V power" --> D
+
+  style A fill:#f9f,stroke:#333,stroke-width:2px
+  style B fill:#bbf,stroke:#333,stroke-width:2px
+  style C fill:#bfb,stroke:#333,stroke-width:2px
+  style D fill:#bfb,stroke:#333,stroke-width:2px`,
     folderStructure: `.
 ├── platformio.ini
 ├── src/
