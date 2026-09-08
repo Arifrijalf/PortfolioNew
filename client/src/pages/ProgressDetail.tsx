@@ -200,9 +200,8 @@ export default function ProgressDetail() {
                   Flowchart
                 </h3>
                 <img
-                  className="project-screenshot"
+                  className="block w-full h-auto max-w-[400px] mx-auto"
                   src={project.flowchartImage}
-                  srcSet={project.flowchartSrcSet}
                   alt={`${project.title} - system flowchart`}
                   loading="lazy"
                 />
@@ -213,7 +212,7 @@ export default function ProgressDetail() {
                   Block Diagram
                 </h3>
                 <img
-                  className="project-screenshot"
+                  className="block w-full h-auto"
                   src={project.blockDiagramImage}
                   srcSet={project.blockDiagramSrcSet}
                   sizes="(max-width: 768px) 100vw, 50vw"
