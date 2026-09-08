@@ -1,4 +1,5 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Moon, Sun } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Link } from "wouter";
 import { projects } from "@/data/microcontrollerProgress";
 import { SmoothSection } from "@/components/SmoothSection";
@@ -6,6 +7,7 @@ import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 
 export default function ProgressMicrocontroller() {
   const { ref, state } = useSectionVisibility();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="site-shell">
@@ -23,7 +25,7 @@ export default function ProgressMicrocontroller() {
             <small>RIJAL FADHILAH</small>
           </span>
         </Link>
-        <nav className="primary-nav" aria-label="Breadcrumb">
+<nav className="primary-nav" aria-label="Breadcrumb">
           <Link href="/">Home</Link>
           <span className="text-[9px] uppercase tracking-widest text-[var(--ink-soft)]">
             /
@@ -32,6 +34,20 @@ export default function ProgressMicrocontroller() {
             Progress Log
           </span>
         </nav>
+        <div className="header-actions">
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={toggleTheme}
+            aria-label={
+              theme === "dark"
+                ? "Switch to light theme"
+                : "Switch to dark theme"
+            }
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+        </div>
       </header>
 
       <main id="main-content" tabIndex={-1}>

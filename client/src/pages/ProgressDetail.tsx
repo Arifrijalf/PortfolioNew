@@ -1,5 +1,6 @@
-import { ArrowLeft, ArrowUpRight, FileText, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, FileText, Github, Moon, Sun } from "lucide-react";
 import { Link, useParams } from "wouter";
+import { useTheme } from "@/contexts/ThemeContext";
 import { projects } from "@/data/microcontrollerProgress";
 import { SmoothSection } from "@/components/SmoothSection";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
@@ -9,6 +10,7 @@ export default function ProgressDetail() {
   const { slug } = useParams();
   const project = projects.find(p => p.slug === slug);
   const { ref, state } = useSectionVisibility();
+  const { theme, toggleTheme } = useTheme();
 
   if (!project)
     return (
@@ -59,6 +61,20 @@ export default function ProgressDetail() {
             {project.slug}
           </span>
         </nav>
+        <div className="header-actions">
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={toggleTheme}
+            aria-label={
+              theme === "dark"
+                ? "Switch to light theme"
+                : "Switch to dark theme"
+            }
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+        </div>
       </header>
 
       <main id="main-content" className="pt-24">
