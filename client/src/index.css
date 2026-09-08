@@ -2046,12 +2046,6 @@ p {
 }
 
 /* Progress Microcontroller Routes */
-.mermaid-wrapper {
-  max-width: 100%;
-}
-.mermaid {
-  background: transparent !important;
-}
 .text-clamp-h1 {
   font-size: clamp(54px, 7.8vw, 118px);
 }
