@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 const INITIAL_TEMP = 22;
 const FAN_ON_TEMP = 25.5;
@@ -25,29 +25,28 @@ export function FanSimulation() {
   const [running, setRunning] = useState(false);
   const animationRef = useRef<number | null>(null);
 
-  const updateFanState = (temp: number) => {
-    const current = fanSpeed;
-    if (current === 0 && temp >= FAN_ON_TEMP) {
+  const updateFanState = useCallback((temp: number, currentSpeed: Speed) => {
+    if (currentSpeed === 0 && temp >= FAN_ON_TEMP) {
       setFanSpeed(1);
-    } else if (current > 0 && temp < FAN_OFF_TEMP) {
+    } else if (currentSpeed > 0 && temp < FAN_OFF_TEMP) {
       setFanSpeed(0);
     }
-    if (temp >= SPEED3_TEMP && current < 3) {
+    if (temp >= SPEED3_TEMP && currentSpeed < 3) {
       setFanSpeed(3);
-    } else if (temp >= SPEED2_TEMP && current < 2) {
+    } else if (temp >= SPEED2_TEMP && currentSpeed < 2) {
       setFanSpeed(2);
     }
-  };
+  }, []);
 
-  const animate = () => {
+  const animate = useCallback(() => {
     if (!running) return;
     setTemperature((t) => {
       const next = t >= 40 ? 22 : Math.min(t + 0.02, 40);
-      updateFanState(next);
+      updateFanState(next, fanSpeed);
       return next;
     });
     animationRef.current = requestAnimationFrame(animate);
-  };
+  }, [running, fanSpeed, updateFanState]);
 
   const toggleRun = () => {
     setRunning(!running);
@@ -61,7 +60,7 @@ export function FanSimulation() {
   const manualStep = (delta: number) => {
     setTemperature((t) => {
       const next = Math.max(20, Math.min(40, t + delta));
-      updateFanState(next);
+      updateFanState(next, fanSpeed);
       return next;
     });
   };
@@ -73,7 +72,7 @@ export function FanSimulation() {
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current!);
     };
-  }, [running]);
+  }, [running, animate]);
 
   return (
     <div className="space-y-8">

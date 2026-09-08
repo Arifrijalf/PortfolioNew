@@ -97,6 +97,7 @@ export const projects: ProgressProject[] = [
         "Local standalone embedded system. 12V rail isolated from the ESP32; common GND across ESP32, sensor, MOSFET, and adapter is required.",
     },
     flowchartImage: "/assets/flowchart-project1.webp",
+    flowchartSrcSet: "/assets/flowchart-project1.webp 451w",
     blockDiagramImage: "/assets/block-diagram-project1.webp",
     blockDiagramSrcSet:
       "/assets/block-diagram-project1_480.webp 480w, /assets/block-diagram-project1_800.webp 800w, /assets/block-diagram-project1.webp 1498w",
