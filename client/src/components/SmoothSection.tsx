@@ -6,9 +6,19 @@ interface SmoothSectionProps extends HTMLAttributes<HTMLDivElement> {
   state: "far" | "near" | "active";
 }
 
-export function SmoothSection({ children, ref, state, className = "", ...props }: SmoothSectionProps) {
+export function SmoothSection({
+  children,
+  ref,
+  state,
+  className = "",
+  ...props
+}: SmoothSectionProps) {
   return (
-    <div ref={ref} className={`smooth-section smooth-section--${state} ${className}`} {...props}>
+    <div
+      ref={ref}
+      className={`smooth-section smooth-section--${state} ${className}`}
+      {...props}
+    >
       {children}
     </div>
   );

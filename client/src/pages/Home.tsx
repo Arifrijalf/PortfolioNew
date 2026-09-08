@@ -117,7 +117,7 @@ const projects = [
         caption: "ESP32 pinout reference for sensor wiring and testing",
       },
       {
-        src: "/assets/sensor-tool-arduino-pinout_9f93273c.webp",
+        src: "/assets/sensor-tool-esp32-pinout_4f764215.webp",
         alt: "Arduino Uno pinout reference",
         caption:
           "Arduino Uno pinout reference for cross-platform sensor checks",

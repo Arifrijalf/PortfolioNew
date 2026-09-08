@@ -77,7 +77,7 @@ AWS Certified IoT Specialty, Amazon Web Services.
 Email: arifrijalfadhilah@gmail.com
 GitHub: github.com/arifrijalf
 LinkedIn: linkedin.com/in/arif-rijal-fadhilah
-Instagram: @aarifrijal_
+Instagram: @aarifrijal\_
 WhatsApp: +62 895-1977-7498
 
 Note: These details were read from the publicly accessible page on the provided source URL. The portfolio should use the relevant details that fit its current one-page student-focused structure, without claiming more than the source supports.

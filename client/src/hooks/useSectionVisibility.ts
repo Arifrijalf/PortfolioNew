@@ -10,14 +10,16 @@ export function useSectionVisibility() {
     const element = ref.current;
     if (!element) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     if (reduced || !("IntersectionObserver" in window)) {
       setState("active");
       return;
     }
 
     const apply = (value: VisibilityState) =>
-      setState((previous) => (previous === value ? previous : value));
+      setState(previous => (previous === value ? previous : value));
     const observe = () => {
       const rect = element.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
@@ -36,7 +38,7 @@ export function useSectionVisibility() {
           if (entry.isIntersecting) apply("active");
           else observe();
         },
-        { threshold: 0.01 },
+        { threshold: 0.01 }
       );
       observer.observe(element);
     }

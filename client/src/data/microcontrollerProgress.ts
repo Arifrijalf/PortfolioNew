@@ -49,7 +49,7 @@ export const projects: ProgressProject[] = [
     type: "ESP32 / PWM FAN CONTROL",
     category: "Microcontroller",
     technologies: ["ESP32", "DS18B20", "PWM"],
-    image: "/assets/sensor-tool-arduino-pinout_9f93273c.webp",
+    image: "/assets/sensor-tool-esp32-pinout_4f764215.webp",
     repo: "https://github.com/Arifrijalf/Kipas-Otomatis-3-Kecepatan-Berbasis-Sensor-Suhu-DS18B20",
     driveUrl:
       "https://drive.google.com/drive/folders/1CZNMAuUZl66mUhxRKfNqMLktxJXYp4JU?usp=sharing",
