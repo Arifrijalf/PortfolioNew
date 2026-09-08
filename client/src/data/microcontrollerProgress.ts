@@ -99,23 +99,23 @@ config:
   layout: elk
   flowchart:
     curve: stepBefore
-    nodeSpacing: 50
-    rankSpacing: 80
+    nodeSpacing: 40
+    rankSpacing: 40
 ---
 flowchart TD
-    A[Start] --> B[Initialize ESP32, DS18B20, and PWM]
-    B --> C[Read Temperature from DS18B20]
-    C --> D{Is Temperature < 25°C?}
+    A[Mulai] --> B[Inisialisasi ESP32, DS18B20, dan PWM]
+    B --> C[Baca Suhu dari DS18B20]
+    C --> D{Apakah Suhu < 25°C?}
     
-    D -- "Yes" --> E[PWM = 0<br>Fan Off]
-    D -- "No" --> F[Calculate PWM Linearly<br>25-40°C → 0-255]
+    D -- YA --> E[PWM = 0<br>Fan Mati]
+    D -- TIDAK --> F[Hitung PWM Secara Linear<br>25-40°C → 0-255]
     
-    E --> G[Send PWM Signal to MOSFET]
+    E --> G[Kirim Sinyal PWM ke MOSFET]
     F --> G
     
-    G --> H[Display Data to Serial Monitor<br>Temperature, PWM, Status]
-    H --> I[Delay 1 Second]
-    I -->|Loop back| C`,
+    G --> H[Tampilkan Data ke Serial Monitor<br>Suhu, PWM, Status]
+    H --> I[Delay 1 Detik]
+    I --> C`,
     mermaidBlock: `---
 config:
   layout: elk
