@@ -1,7 +1,6 @@
 import { ArrowLeft, ArrowUpRight, FileText, Github } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { projects } from "@/data/microcontrollerProgress";
-import { Mermaid } from "@/components/Mermaid";
 import { SmoothSection } from "@/components/SmoothSection";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 import { FanSimulation } from "@/components/FanSimulation";
@@ -200,14 +199,27 @@ export default function ProgressDetail() {
                 <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
                   Flowchart
                 </h3>
-                <Mermaid chart={project.mermaidFlowchart} />
+                <img
+                  className="project-screenshot"
+                  src={project.flowchartImage}
+                  srcSet={project.flowchartSrcSet}
+                  alt={`${project.title} - system flowchart`}
+                  loading="lazy"
+                />
               {project.slug === "ds18b20-3-speed-fan" && <FanSimulation />}
               </div>
               <div>
                 <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
                   Block Diagram
                 </h3>
-                <Mermaid chart={project.mermaidBlock} />
+                <img
+                  className="project-screenshot"
+                  src={project.blockDiagramImage}
+                  srcSet={project.blockDiagramSrcSet}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  alt={`${project.title} - system block diagram`}
+                  loading="lazy"
+                />
               </div>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8 p-8 border border-[var(--line)] bg-[var(--paper-deep)]">

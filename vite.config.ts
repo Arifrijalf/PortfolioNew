@@ -24,7 +24,6 @@ export default defineConfig({
           vendor: ["react", "react-dom", "wouter"],
           radix: ["@radix-ui/react-dialog", "@radix-ui/react-slot"],
           sonner: ["sonner"],
-          mermaid: ["mermaid"],
         },
       },
     },

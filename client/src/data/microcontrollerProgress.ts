@@ -28,8 +28,10 @@ export type ProgressProject = {
     dataFlow: string[];
     deployment: string;
   };
-  mermaidFlowchart: string;
-  mermaidBlock: string;
+  flowchartImage: string;
+  flowchartSrcSet?: string;
+  blockDiagramImage: string;
+  blockDiagramSrcSet?: string;
   folderStructure: string;
   codeSnippets: {
     label: string;
@@ -94,58 +96,10 @@ export const projects: ProgressProject[] = [
       deployment:
         "Local standalone embedded system. 12V rail isolated from the ESP32; common GND across ESP32, sensor, MOSFET, and adapter is required.",
     },
-    mermaidFlowchart: `---
-config:
-  layout: elk
-  flowchart:
-    curve: stepBefore
-    nodeSpacing: 40
-    rankSpacing: 40
----
-flowchart TD
-    A[Mulai] --> B[Inisialisasi ESP32, DS18B20, dan PWM]
-    B --> C[Baca Suhu dari DS18B20]
-    C --> D{Apakah Suhu < 25°C?}
-    
-    D -- YA --> E[PWM = 0<br>Fan Mati]
-    D -- TIDAK --> F[Hitung PWM Secara Linear<br>25-40°C → 0-255]
-    
-    E --> G[Kirim Sinyal PWM ke MOSFET]
-    F --> G
-    
-    G --> H[Tampilkan Data ke Serial Monitor<br>Suhu, PWM, Status]
-    H --> I[Delay 1 Detik]
-    I --> C`,
-    mermaidBlock: `---
-config:
-  layout: elk
-  flowchart:
-    curve: stepBefore
-    nodeSpacing: 50
-    rankSpacing: 90
----
-flowchart LR
-  subgraph Input
-    A[Temperature Sensor<br>DS18B20]
-  end
-
-  subgraph Process
-    B[ESP32<br>Reads temperature data<br>Calculates PWM<br>Linear Mapping]
-  end
-
-  subgraph Output
-    C[MOSFET IRLZ44N<br>PWM Driver]
-    D[12V DC Fan]
-  end
-
-  A -- "Digital temperature data (1-Wire)" --> B
-  B -- "PWM signal (GPIO 15)" --> C
-  C -- "Controlled 12V power" --> D
-
-  style A fill:#f9f,stroke:#333,stroke-width:2px
-  style B fill:#bbf,stroke:#333,stroke-width:2px
-  style C fill:#bfb,stroke:#333,stroke-width:2px
-  style D fill:#bfb,stroke:#333,stroke-width:2px`,
+    flowchartImage: "/assets/flowchart-project1.webp",
+    blockDiagramImage: "/assets/block-diagram-project1.webp",
+    blockDiagramSrcSet:
+      "/assets/block-diagram-project1_480.webp 480w, /assets/block-diagram-project1_800.webp 800w, /assets/block-diagram-project1.webp 1498w",
     folderStructure: `.
 ├── platformio.ini
 ├── src/
