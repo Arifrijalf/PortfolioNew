@@ -210,7 +210,7 @@ export default function ProgressDetail() {
             <h2 className="text-3xl font-bold tracking-tighter mb-8 uppercase">
               Architecture
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-1 gap-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-start">
               <div>
                 <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
                   Flowchart
@@ -221,14 +221,18 @@ export default function ProgressDetail() {
                   alt={`${project.title} - system flowchart`}
                   loading="lazy"
                 />
-              {project.slug === "ds18b20-3-speed-fan" && <FanSimulation />}
+              {project.slug === "ds18b20-3-speed-fan" && (
+                <div className="mt-16 pt-16 border-t border-[var(--line)] border-dashed">
+                  <FanSimulation />
+                </div>
+              )}
               </div>
               <div>
                 <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
                   Block Diagram
                 </h3>
                 <img
-                  className="block w-full h-auto"
+                  className="block w-full h-auto max-w-[600px] mx-auto"
                   src={project.blockDiagramImage}
                   srcSet={project.blockDiagramSrcSet}
                   sizes="(max-width: 768px) 100vw, 50vw"
