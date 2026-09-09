@@ -1,22 +1,21 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 
 const INITIAL_TEMP = 22;
-const FAN_ON_TEMP = 25.5;
-const FAN_OFF_TEMP = 24.5;
-const SPEED2_TEMP = 30.0;
-const SPEED3_TEMP = 35.0;
+const TEMP_COLD = 25.0;
+const TEMP_WARM = 30.0;
+const TEMP_HOT = 40.0;
 
-const SPEED1_PWM = 85;
-const SPEED2_PWM = 170;
-const SPEED3_PWM = 255;
+const PWM_LOW = 76;
+const PWM_MED = 153;
+const PWM_HIGH = 255;
 
-type Speed = 1 | 2 | 3 | 0;
+type Speed = 0 | 1 | 2 | 3;
 
 const fanSpeedMap: Record<Speed, number> = {
   0: 0,
-  1: SPEED1_PWM,
-  2: SPEED2_PWM,
-  3: SPEED3_PWM,
+  1: PWM_LOW,
+  2: PWM_MED,
+  3: PWM_HIGH,
 };
 
 export function FanSimulation() {
@@ -25,28 +24,27 @@ export function FanSimulation() {
   const [running, setRunning] = useState(false);
   const animationRef = useRef<number | null>(null);
 
-  const updateFanState = useCallback((temp: number, currentSpeed: Speed) => {
-    if (currentSpeed === 0 && temp >= FAN_ON_TEMP) {
-      setFanSpeed(1);
-    } else if (currentSpeed > 0 && temp < FAN_OFF_TEMP) {
+  const updateFanState = useCallback((temp: number) => {
+    if (temp < TEMP_COLD) {
       setFanSpeed(0);
-    }
-    if (temp >= SPEED3_TEMP && currentSpeed < 3) {
-      setFanSpeed(3);
-    } else if (temp >= SPEED2_TEMP && currentSpeed < 2) {
+    } else if (temp < TEMP_WARM) {
+      setFanSpeed(1);
+    } else if (temp < TEMP_HOT) {
       setFanSpeed(2);
+    } else {
+      setFanSpeed(3);
     }
   }, []);
 
   const animate = useCallback(() => {
     if (!running) return;
     setTemperature((t) => {
-      const next = t >= 40 ? 22 : Math.min(t + 0.02, 40);
-      updateFanState(next, fanSpeed);
+      const next = t >= 50 ? 22 : Math.min(t + 0.05, 50);
+      updateFanState(next);
       return next;
     });
     animationRef.current = requestAnimationFrame(animate);
-  }, [running, fanSpeed, updateFanState]);
+  }, [running, updateFanState]);
 
   const toggleRun = () => {
     setRunning(!running);
@@ -60,7 +58,7 @@ export function FanSimulation() {
   const manualStep = (delta: number) => {
     setTemperature((t) => {
       const next = Math.max(20, Math.min(40, t + delta));
-      updateFanState(next, fanSpeed);
+      updateFanState(next);
       return next;
     });
   };
@@ -125,39 +123,39 @@ export function FanSimulation() {
 
       <div className="border rounded-lg p-6 border-[var(--line)]">
         <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
-          Hysteresis & Speed Tiers
+          Temperature Zones & PWM
         </h3>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <p className="font-mono text-[var(--accent)]">Fan OFF</p>
-            <p>{"Temperature < 24.5 C"}</p>
+            <p className="font-mono text-[var(--accent)]">Cold (Off)</p>
+            <p>{"Temp < 25°C; PWM 0"}</p>
           </div>
           <div>
-            <p className="font-mono text-[var(--accent)]">Speed 1 (Slow)</p>
-            <p>{"PWM 85 (~33%); 25.5C <= Temp < 30.0C"}</p>
+            <p className="font-mono text-[var(--accent)]">Warm (Low)</p>
+            <p>{"25°C - 30°C; PWM 76 (30%)"}</p>
           </div>
           <div>
-            <p className="font-mono text-[var(--accent)]">Speed 2 (Medium)</p>
-            <p>{"PWM 170 (~66%); 30.0C <= Temp < 35.0C"}</p>
+            <p className="font-mono text-[var(--accent)]">Hot (Medium)</p>
+            <p>{"30°C - 40°C; PWM 153 (60%)"}</p>
           </div>
           <div>
-            <p className="font-mono text-[var(--accent)]">Speed 3 (Fast)</p>
-            <p>{"PWM 255 (100%); Temp >= 35.0C"}</p>
+            <p className="font-mono text-[var(--accent)]">Very Hot (High)</p>
+            <p>{"> 40°C; PWM 255 (100%)"}</p>
           </div>
         </div>
 
         <div className="mt-6 grid grid-cols-3 gap-2">
           <div>
-            <p className="font-mono text-[var(--accent)]">{"ON ->"}</p>
-            <p>{"Temp >= 25.5C (hysteresis)"}</p>
+            <p className="font-mono text-[var(--accent)]">LED 1</p>
+            <p>{"Temp >= 25°C"}</p>
           </div>
           <div>
-            <p className="font-mono text-[var(--accent)]">Speed steps</p>
-            <p>{"at 30.0C and 35.0C"}</p>
+            <p className="font-mono text-[var(--accent)]">LED 2</p>
+            <p>{"Temp >= 30°C"}</p>
           </div>
           <div>
-            <p className="font-mono text-[var(--accent)]">Fail-safe</p>
-            <p>{"Sensor error -> Fan OFF"}</p>
+            <p className="font-mono text-[var(--accent)]">LED 3</p>
+            <p>{"Temp >= 40°C"}</p>
           </div>
         </div>
       </div>

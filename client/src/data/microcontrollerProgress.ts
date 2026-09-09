@@ -59,42 +59,46 @@ export const projects: ProgressProject[] = [
       "https://drive.google.com/drive/folders/1CZNMAuUZl66mUhxRKfNqMLktxJXYp4JU?usp=sharing",
     status: "ongoing",
     summary:
-      "A 12V DC fan that regulates its own speed from room temperature. A DS18B20 sensor feeds an ESP32, which drives the fan through a MOSFET in three PWM tiers — slow, medium, fast — with on/off hysteresis so the fan never chatters at the temperature boundary.",
+      "Conventional fans are still operated manually, often causing energy waste. This system uses a DS18B20 digital temperature sensor and ESP32 to automatically adjust fan speed in 3 tiers (Low, Medium, High) based on room temperature changes.",
     objectives: [
-      "Read temperature over OneWire from a DS18B20 on GPIO 4",
-      "Drive a 3-stage fan curve with 25 kHz LEDC PWM from GPIO 15",
-      "Keep switching stable with 25.5 ON / 24.5 OFF hysteresis",
-      "Fail safe to fan-off on sensor disconnect",
+      "Read temperature data using a DS18B20 sensor with ESP32",
+      "Control fan speed using PWM (Pulse Width Modulation) signals",
+      "Display temperature and fan speed information to the user via Serial Monitor",
+      "Optimize energy usage by turning off the fan when the room is cool",
     ],
     features: [
-      "Three speeds: PWM 85 (33%), 170 (66%), 255 (100%)",
-      "Hysteresis band: fan starts at 25.5 C, stops below 24.5 C",
-      "Speed steps at 30.0 C and 35.0 C",
-      "Fail-safe shutdown on SENSOR ERROR",
-      "Per-second serial telemetry at 115200 baud",
+      "Three speeds: Low (PWM 76), Medium (PWM 153), High (PWM 255)",
+      "Temperature Zones: <25°C (Off), 25-30°C (Low), 30-40°C (Medium), >40°C (High)",
+      "LED Indicators: LED 1 (Warm), LED 1-2 (Hot), LED 1-2-3 (Very Hot)",
+      "Flyback protection using a 1N4007 diode to safeguard the MOSFET",
+      "Real-time debugging via Serial Monitor",
     ],
     techStack: [
-      "PlatformIO",
-      "ESP32 Arduino",
-      "C/C++",
-      "OneWire",
-      "DallasTemperature",
+      "ESP32 Dev Board",
+      "Arduino IDE / PlatformIO",
+      "C++",
+      "OneWire Library",
+      "DallasTemperature Library",
     ],
     architectureNotes: {
       components: [
-        "ESP32 DevKit V1 (controller, esp32doit-devkit-v1)",
-        "DS18B20 on GPIO 4 with mandatory 4.7k pull-up to 3.3V",
-        "IRLZ44N logic-level MOSFET, gate via 220 ohm from GPIO 15",
-        "1N4007 flyback diode across the 12V fan",
-        "12V DC fan on an isolated 12V rail (min 1A adapter)",
+        "ESP32 Dev Board (DOIT DEVKIT V1)",
+        "DS18B20 Temperature Sensor (Digital, 1-Wire)",
+        "MOSFET IRLZ44N (N-Channel Logic-Level)",
+        "1N4007 Diode (Flyback Protection)",
+        "3x LED Indicators",
+        "Resistor (4.7k Pull-up & Gate Resistor)",
+        "Fan DC 12V",
+        "Adaptor Power Supply 12V 1A",
       ],
       dataFlow: [
-        "DS18B20 reports temperature over OneWire to GPIO 4 every 1s",
-        "Firmware applies hysteresis latch, then maps to a PWM tier",
-        "ESP32 writes 25 kHz LEDC on GPIO 15 and logs status to serial",
+        "DS18B20 sensor sends digital temperature data to ESP32 via 1-Wire protocol",
+        "ESP32 compares temperature against the defined thresholds",
+        "ESP32 sends PWM signal (0-255) to MOSFET Gate to regulate fan power",
+        "System status is sent to Serial Monitor and LED indicators are updated",
       ],
       deployment:
-        "Local standalone embedded system. 12V rail isolated from the ESP32; common GND across ESP32, sensor, MOSFET, and adapter is required.",
+        "Standalone Embedded System. Fan powered by a separate 12V adapter with Common Ground to ESP32. MOSFET acts as a fast electronic switch (PWM).",
     },
     flowchartImage: "/assets/flowchart-project1.svg",
     blockDiagramImage: "/assets/block-diagram-project1.webp",
@@ -107,51 +111,45 @@ export const projects: ProgressProject[] = [
 ├── include/
 ├── lib/
 ├── test/
-├── docs/
-│   ├── hari-01/ … hari-07/
-│   └── final/
-├── WIRING.md
 └── README.md`,
     codeSnippets: [
       {
-        label: "Pin and Threshold Configuration (src/main.cpp)",
+        label: "Constants & Thresholds (main.cpp)",
         lang: "cpp",
-        code: `constexpr uint8_t ONE_WIRE_PIN = 4;           // DS18B20 DATA
-constexpr uint8_t FAN_PWM_PIN = 15;          // MOSFET Gate (via 220 ohm)
-constexpr uint8_t PWM_CHANNEL = 0;
-constexpr uint8_t PWM_RESOLUTION = 8;
-constexpr uint32_t PWM_FREQUENCY = 25000;    // 25 kHz, no audible whine
-constexpr float FAN_ON_TEMPERATURE = 25.5f;  // fan starts
-constexpr float FAN_OFF_TEMPERATURE = 24.5f; // full stop (hysteresis)
-constexpr float SPEED2_TEMPERATURE = 30.0f;  // step to speed 2
-constexpr float SPEED3_TEMPERATURE = 35.0f;  // step to speed 3
-constexpr uint8_t SPEED1_PWM = 85;           // slow, ~33%
-constexpr uint8_t SPEED2_PWM = 170;          // medium, ~66%
-constexpr uint8_t SPEED3_PWM = 255;          // fast, 100%
-constexpr unsigned long SENSOR_INTERVAL_MS = 1000;`,
+        code: `// Pin Definitions
+const int SENSOR_PIN = 4;
+const int FAN_PWM_PIN = 15;
+const int LED1 = 18;
+const int LED2 = 19;
+const int LED3 = 21;
+
+// Thresholds
+const float TEMP_COLD = 25.0;
+const float TEMP_WARM = 30.0;
+const float TEMP_HOT = 40.0;
+
+// PWM Values
+const int PWM_LOW = 76;   // 30%
+const int PWM_MED = 153;  // 60%
+const int PWM_HIGH = 255; // 100%`,
       },
       {
-        label: "Hysteresis Latch and PWM Mapping (src/main.cpp)",
+        label: "Speed Control Logic (main.cpp)",
         lang: "cpp",
-        code: `void updateFanState(float temperature) {
-    if (!fanActive && temperature >= FAN_ON_TEMPERATURE) {
-        fanActive = true;
-    } else if (fanActive && temperature < FAN_OFF_TEMPERATURE) {
-        fanActive = false;
-    }
-}
-
-uint8_t calculatePwm(float temperature) {
-    if (!fanActive || temperature < FAN_OFF_TEMPERATURE) {
-        return 0;
-    }
-    if (temperature >= SPEED3_TEMPERATURE) {
-        return SPEED3_PWM;
-    }
-    if (temperature >= SPEED2_TEMPERATURE) {
-        return SPEED2_PWM;
-    }
-    return SPEED1_PWM;
+        code: `void controlFan(float temp) {
+  if (temp < TEMP_COLD) {
+    analogWrite(FAN_PWM_PIN, 0);
+    setLEDs(LOW, LOW, LOW);
+  } else if (temp < TEMP_WARM) {
+    analogWrite(FAN_PWM_PIN, PWM_LOW);
+    setLEDs(HIGH, LOW, LOW);
+  } else if (temp < TEMP_HOT) {
+    analogWrite(FAN_PWM_PIN, PWM_MED);
+    setLEDs(HIGH, HIGH, LOW);
+  } else {
+    analogWrite(FAN_PWM_PIN, PWM_HIGH);
+    setLEDs(HIGH, HIGH, HIGH);
+  }
 }`,
       },
     ],
