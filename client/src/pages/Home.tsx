@@ -1,3 +1,4 @@
+import { SiteHeader } from "@/components/SiteHeader";
 // STYLE DIRECTION: Evidence-led field notes — use a quiet personal portrait, real engineering details, restrained vermilion, and documentation-like hierarchy.
 import {
   ArrowDownRight,
@@ -7,15 +8,11 @@ import {
   ChevronRight,
   LoaderCircle,
   Maximize2,
-  Menu,
-  Moon,
-  Sun,
   X,
 } from "lucide-react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 import { type FormEvent, useEffect, useState } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
 import {
   Dialog,
   DialogContent,
@@ -32,7 +29,6 @@ const projects = [
     category: "College Projects",
     technologies: ["ESP32", "PID"],
     note: "Thermal control record",
-    slug: "smart-baby-incubator",
     repo: "https://github.com/Arifrijalf/InkubatorBayi",
     image: "/assets/smart-baby-incubator_270318b2.webp",
     imageSrcSet:
@@ -101,7 +97,6 @@ const projects = [
     category: "Arduino",
     technologies: ["Arduino", "ESP32"],
     note: "Sensor test record",
-    slug: "ds18b20-3-speed-fan",
     repo: "https://github.com/Arifrijalf/Program-Calibration-Sensor",
     image: "/assets/sensor-tool-esp32-pinout_4f764215.webp",
     imageSrcSet:
@@ -189,8 +184,6 @@ export default function Home() {
   const { ref: practiceRef, state: practiceState } = useSectionVisibility();
   const { ref: experienceRef, state: experienceState } = useSectionVisibility();
   const { ref: contactRef, state: contactState } = useSectionVisibility();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
   const [detailProject, setDetailProject] = useState<
     (typeof projects)[number] | null
   >(null);
@@ -211,11 +204,6 @@ export default function Home() {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    const meta = document.querySelector('meta[name="theme-color"]');
-    meta?.setAttribute("content", theme === "dark" ? "#171715" : "#f4f0e8");
-  }, [theme]);
-
-  useEffect(() => {
     const handleScroll = () => setShowBackToTop(window.scrollY > 620);
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -227,7 +215,6 @@ export default function Home() {
     return () => document.documentElement.classList.remove("motion-ready");
   }, []);
 
-  const closeMenu = () => setMenuOpen(false);
   const openLightbox = (project: (typeof projects)[number], index = 0) =>
     setLightbox({ project, index });
   const shiftLightbox = (direction: number) => {
@@ -327,75 +314,7 @@ export default function Home() {
 
   return (
     <div className="site-shell">
-      <header className="site-header">
-        <a
-          className="brand-lockup"
-          href="#top"
-          onClick={closeMenu}
-          aria-label="ARIF RIJAL FADHILAH"
-        >
-          <span className="brand-mark" aria-hidden="true">
-            <span className="signal-symbol">
-              <i />
-              <i />
-              <i />
-            </span>
-          </span>
-          <span className="brand-wordmark">
-            <strong>ARIF</strong>
-            <small>RIJAL FADHILAH</small>
-          </span>
-        </a>
-
-        <button
-          className="mobile-menu-toggle"
-          type="button"
-          onClick={() => setMenuOpen(open => !open)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X size={19} /> : <Menu size={19} />}
-        </button>
-
-        <nav
-          className={`primary-nav ${menuOpen ? "is-open" : ""}`}
-          aria-label="Primary navigation"
-        >
-          <a href="#about" onClick={closeMenu}>
-            About
-          </a>
-          <a href="#work" onClick={closeMenu}>
-            Work
-          </a>
-          <a href="/progress-microcontroller" onClick={closeMenu}>
-            Progress
-          </a>
-          <a href="#practice" onClick={closeMenu}>
-            Practice
-          </a>
-          <a href="#contact" onClick={closeMenu}>
-            Contact
-          </a>
-        </nav>
-
-        <div className="header-actions">
-          <button
-            className="theme-toggle"
-            type="button"
-            onClick={toggleTheme}
-            aria-label={
-              theme === "dark"
-                ? "Switch to light theme"
-                : "Switch to dark theme"
-            }
-          >
-            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-          <a className="header-cta" href="#contact" onClick={closeMenu}>
-            Say hello <ArrowUpRight size={15} />
-          </a>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="main-content" tabIndex={-1}>
         <section
@@ -589,14 +508,6 @@ export default function Home() {
                       >
                         View details <ArrowUpRight size={15} />
                       </button>
-                      {"slug" in project && project.slug && (
-                        <Link
-                          href={`/progress-microcontroller/${project.slug}`}
-                          className="project-link bg-[var(--ink)] text-[var(--paper)]"
-                        >
-                          Progress Log <ArrowUpRight size={15} />
-                        </Link>
-                      )}
                       <a
                         href={project.repo}
                         target="_blank"
@@ -610,6 +521,22 @@ export default function Home() {
                 </article>
               );
             })}
+          </div>
+          <div className="logbook-callout">
+            <div>
+              <p className="section-overline">From prototype to progress</p>
+              <h3>Follow the engineering logbook.</h3>
+              <p>
+                Explore the DS18B20 fan controller, its firmware, and the next
+                steps at the bench.
+              </p>
+            </div>
+            <Link
+              href="/progress-microcontroller"
+              className="project-detail-button"
+            >
+              Explore progress logs <ArrowUpRight size={16} />
+            </Link>
           </div>
         </SmoothSection>
 

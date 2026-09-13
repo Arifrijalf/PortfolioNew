@@ -1,5 +1,5 @@
-import { ArrowUpRight, Moon, Sun } from "lucide-react";
-import { useTheme } from "@/contexts/ThemeContext";
+import { SiteHeader } from "@/components/SiteHeader";
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { projects } from "@/data/microcontrollerProgress";
 import { SmoothSection } from "@/components/SmoothSection";
@@ -7,67 +7,34 @@ import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 
 export default function ProgressMicrocontroller() {
   const { ref, state } = useSectionVisibility();
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="site-shell">
-      <header className="site-header">
-        <Link className="brand-lockup" href="/">
-          <span className="brand-mark" aria-hidden="true">
-            <span className="signal-symbol">
-              <i />
-              <i />
-              <i />
-            </span>
-          </span>
-          <span className="brand-wordmark">
-            <strong>ARIF</strong>
-            <small>RIJAL FADHILAH</small>
-          </span>
-        </Link>
-<nav className="primary-nav" aria-label="Breadcrumb">
-          <Link href="/">Home</Link>
-          <span className="text-[9px] uppercase tracking-widest text-[var(--ink-soft)]">
-            /
-          </span>
-          <span className="text-[9px] uppercase tracking-widest text-[var(--accent)] font-mono">
-            Progress Log
-          </span>
-        </nav>
-        <div className="header-actions">
-          <button
-            className="theme-toggle"
-            type="button"
-            onClick={toggleTheme}
-            aria-label={
-              theme === "dark"
-                ? "Switch to light theme"
-                : "Switch to dark theme"
-            }
-          >
-            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="main-content" tabIndex={-1}>
         <SmoothSection
           ref={ref}
           state={state}
-          className="section-shell min-h-screen"
+          className="section-shell progress-index min-h-screen"
           id="progress"
         >
+          <nav className="page-breadcrumb" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Progress</span>
+          </nav>
           <div className="section-heading mb-16">
             <div className="section-rail">
               <span>Log</span>
             </div>
             <div>
               <p className="section-overline">Microcontroller Gallery</p>
-              <h2>
+              <h1 className="progress-index-title">
                 Weekly
                 <br />
                 <em>Progress.</em>
-              </h2>
+              </h1>
             </div>
             <p className="section-intro">
               Detailed engineering logs, challenges, and iterative plans for
@@ -82,7 +49,11 @@ export default function ProgressMicrocontroller() {
                 key={project.slug}
               >
                 <div className="project-evidence">
-                  <div className="project-image-trigger cursor-default">
+                  <Link
+                    className="project-image-trigger"
+                    href={`/progress-microcontroller/${project.slug}`}
+                    aria-label={`Read the log for ${project.title}`}
+                  >
                     <img
                       className="project-screenshot"
                       src={project.image}
@@ -91,7 +62,7 @@ export default function ProgressMicrocontroller() {
                       alt={project.title}
                       loading="lazy"
                     />
-                  </div>
+                  </Link>
                   <span className="evidence-label">
                     {project.status === "ongoing"
                       ? "Work in Progress"
@@ -116,7 +87,15 @@ export default function ProgressMicrocontroller() {
                   <p className="project-type">
                     Project {index + 1} — {project.type}
                   </p>
-                  <h3>{project.title}</h3>
+                  <h2 className="progress-card-title">
+                    <Link href={`/progress-microcontroller/${project.slug}`}>
+                      {project.title}
+                    </Link>
+                  </h2>
+                  <p className="latest-log">
+                    Latest entry:{" "}
+                    {project.weeks[project.weeks.length - 1]?.title}
+                  </p>
                   <p>{project.summary}</p>
                   <div className="project-actions">
                     <Link

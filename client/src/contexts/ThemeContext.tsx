@@ -31,6 +31,9 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = document.documentElement;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", theme === "dark" ? "#171715" : "#f4f0e8");
     if (theme === "dark") {
       root.classList.add("dark");
     } else {

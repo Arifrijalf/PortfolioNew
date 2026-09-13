@@ -1,164 +1,139 @@
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
-const INITIAL_TEMP = 22;
-const TEMP_COLD = 25.0;
-const TEMP_WARM = 30.0;
-const TEMP_HOT = 40.0;
-
-const PWM_LOW = 76;
-const PWM_MED = 153;
-const PWM_HIGH = 255;
-
-type Speed = 0 | 1 | 2 | 3;
-
-const fanSpeedMap: Record<Speed, number> = {
-  0: 0,
-  1: PWM_LOW,
-  2: PWM_MED,
-  3: PWM_HIGH,
-};
+const zones = [
+  { label: "Off", range: "T <25 C", pwm: 0 },
+  { label: "Low", range: "25 C <= T <30 C", pwm: 76 },
+  { label: "Medium", range: "30 C <= T <35 C", pwm: 153 },
+  { label: "High", range: "T >=35 C", pwm: 255 },
+];
 
 export function FanSimulation() {
-  const [temperature, setTemperature] = useState(INITIAL_TEMP);
-  const [fanSpeed, setFanSpeed] = useState<Speed>(0);
+  const [temperature, setTemperature] = useState(22);
   const [running, setRunning] = useState(false);
-  const animationRef = useRef<number | null>(null);
-
-  const updateFanState = useCallback((temp: number) => {
-    if (temp < TEMP_COLD) {
-      setFanSpeed(0);
-    } else if (temp < TEMP_WARM) {
-      setFanSpeed(1);
-    } else if (temp < TEMP_HOT) {
-      setFanSpeed(2);
-    } else {
-      setFanSpeed(3);
-    }
-  }, []);
-
-  const animate = useCallback(() => {
-    if (!running) return;
-    setTemperature((t) => {
-      const next = t >= 50 ? 22 : Math.min(t + 0.05, 50);
-      updateFanState(next);
-      return next;
-    });
-    animationRef.current = requestAnimationFrame(animate);
-  }, [running, updateFanState]);
-
-  const toggleRun = () => {
-    setRunning(!running);
-    if (running) {
-      animationRef.current && cancelAnimationFrame(animationRef.current!);
-    } else {
-      animate();
-    }
-  };
-
-  const manualStep = (delta: number) => {
-    setTemperature((t) => {
-      const next = Math.max(20, Math.min(40, t + delta));
-      updateFanState(next);
-      return next;
-    });
-  };
+  const level =
+    temperature < 25 ? 0 : temperature < 30 ? 1 : temperature < 35 ? 2 : 3;
+  const indicator =
+    temperature < 25
+      ? "Off"
+      : temperature < 31
+        ? "Green"
+        : temperature < 35
+          ? "Yellow"
+          : "Red";
 
   useEffect(() => {
-    if (running) {
-      animate();
-    }
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current!);
-    };
-  }, [running, animate]);
+    if (!running) return;
+    const timer = window.setInterval(() => {
+      setTemperature(current =>
+        current >= 40 ? 20 : Math.min(40, Math.round((current + 0.1) * 10) / 10)
+      );
+    }, 100);
+    return () => window.clearInterval(timer);
+  }, [running]);
+
+  const adjustTemperature = (value: number) => {
+    setRunning(false);
+    setTemperature(Math.max(20, Math.min(40, value)));
+  };
 
   return (
-    <div className="space-y-8">
-      <div className="border rounded-lg p-6 border-[var(--line)]">
-        <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
-          Temperature & Fan Speed Simulation
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <div>
-            <p className="text-sm text-[var(--ink-soft)] mb-1">Current Temperature</p>
-            <p className="text-3xl font-bold font-serif">
-              {temperature.toFixed(1)} C
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-[var(--ink-soft)] mb-1">Fan Speed</p>
-            <p className="text-3xl font-bold">
-              {fanSpeed === 0
-                ? "OFF"
-                : `Speed ${fanSpeed} (PWM ${fanSpeedMap[fanSpeed]})`}
-            </p>
+    <div className="simulation-panel">
+      <p className="section-overline">Try the control logic</p>
+      <h2>Temperature & fan simulation</h2>
+      <div className="simulation-layout">
+        <div>
+          <p className="text-sm text-[var(--ink-soft)]">
+            Move the slider to explore each fan target and temperature
+            indicator.
+          </p>
+          <dl className="simulation-readings">
+            <div>
+              <dt>Temperature</dt>
+              <dd>{temperature.toFixed(1)} C</dd>
+            </div>
+            <div>
+              <dt>Fan target</dt>
+              <dd>
+                {zones[level].label} / {zones[level].pwm}
+              </dd>
+            </div>
+          </dl>
+          <label htmlFor="simulation-temperature" className="text-sm">
+            Temperature (20 to 40 C)
+          </label>
+          <input
+            id="simulation-temperature"
+            type="range"
+            min="20"
+            max="40"
+            step="0.1"
+            value={temperature}
+            aria-valuetext={`${temperature.toFixed(1)} degrees Celsius`}
+            onChange={event => adjustTemperature(Number(event.target.value))}
+          />
+          <p className="text-sm">
+            Active LED: <strong>{indicator}</strong>
+          </p>
+          <div className="simulation-controls">
+            <button
+              type="button"
+              onClick={() => adjustTemperature(temperature - 1)}
+              disabled={temperature <= 20}
+            >
+              -1 C
+            </button>
+            <button
+              type="button"
+              onClick={() => adjustTemperature(temperature + 1)}
+              disabled={temperature >= 40}
+            >
+              +1 C
+            </button>
+            <button
+              type="button"
+              onClick={() => setRunning(current => !current)}
+              aria-pressed={running}
+            >
+              {running ? "Pause" : "Run"}
+            </button>
+            <button type="button" onClick={() => adjustTemperature(22)}>
+              Reset
+            </button>
           </div>
         </div>
-
-        <div className="mt-6 h-64 rounded bg-[var(--paper)] relative overflow-hidden">
-          <div
-            className="absolute bottom-0 left-0 right-0 bg-[var(--accent)]"
-            style={{ height: `${(temperature - 20) / 20 * 100}%` }}
-          ></div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-3 gap-2">
-          <button
-            onClick={() => manualStep(-2)}
-            className="flex-1 py-2 rounded border border-[var(--line)] hover:bg-[var(--accent)] text-[10px] uppercase tracking-widest transition-colors"
-          >
-            -2C
-          </button>
-          <button
-            onClick={() => manualStep(2)}
-            className="flex-1 py-2 rounded border border-[var(--line)] hover:bg-[var(--accent)] text-[10px] uppercase tracking-widest transition-colors"
-          >
-            +2C
-          </button>
-          <button onClick={toggleRun} className="flex-1 py-2 rounded border border-[var(--line)] hover:bg-[var(--accent)] text-[10px] uppercase tracking-widest transition-colors">
-            {running ? "Pause" : "Run"}
-          </button>
+        <div>
+          <table className="simulation-table">
+            <caption className="text-left text-sm mb-3">
+              Fan temperature zones
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Target</th>
+                <th scope="col">Temperature</th>
+                <th scope="col">PWM</th>
+              </tr>
+            </thead>
+            <tbody>
+              {zones.map((zone, index) => (
+                <tr key={zone.label} data-active={index === level}>
+                  <th scope="row">{zone.label}</th>
+                  <td>{zone.range}</td>
+                  <td>{zone.pwm}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="simulation-note">
+            One LED at a time: green from 25 to below 31 C, yellow from 31 to
+            below 35 C, red at 35 C and above. All LEDs are off below 25 C.
+          </p>
         </div>
       </div>
-
-      <div className="border rounded-lg p-6 border-[var(--line)]">
-        <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
-          Temperature Zones & PWM
-        </h3>
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <p className="font-mono text-[var(--accent)]">Cold (Off)</p>
-            <p>{"Temp < 25°C; PWM 0"}</p>
-          </div>
-          <div>
-            <p className="font-mono text-[var(--accent)]">Warm (Low)</p>
-            <p>{"25°C - 30°C; PWM 76 (30%)"}</p>
-          </div>
-          <div>
-            <p className="font-mono text-[var(--accent)]">Hot (Medium)</p>
-            <p>{"30°C - 40°C; PWM 153 (60%)"}</p>
-          </div>
-          <div>
-            <p className="font-mono text-[var(--accent)]">Very Hot (High)</p>
-            <p>{"> 40°C; PWM 255 (100%)"}</p>
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-3 gap-2">
-          <div>
-            <p className="font-mono text-[var(--accent)]">LED 1</p>
-            <p>{"Temp >= 25°C"}</p>
-          </div>
-          <div>
-            <p className="font-mono text-[var(--accent)]">LED 2</p>
-            <p>{"Temp >= 30°C"}</p>
-          </div>
-          <div>
-            <p className="font-mono text-[var(--accent)]">LED 3</p>
-            <p>{"Temp >= 40°C"}</p>
-          </div>
-        </div>
-      </div>
+      <p className="simulation-note">
+        This demonstration shows target duty. Firmware ramps applied PWM by 5
+        counts every 20 ms; OFF is immediate when detected. PWM is a command,
+        not measured RPM.
+      </p>
     </div>
   );
 }

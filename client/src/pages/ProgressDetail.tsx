@@ -1,6 +1,6 @@
-import { ArrowLeft, ArrowUpRight, FileText, Github, Moon, Sun } from "lucide-react";
+import { SiteHeader } from "@/components/SiteHeader";
+import { ArrowLeft, ArrowUpRight, FileText, Github } from "lucide-react";
 import { Link, useParams } from "wouter";
-import { useTheme } from "@/contexts/ThemeContext";
 import { projects } from "@/data/microcontrollerProgress";
 import { SmoothSection } from "@/components/SmoothSection";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
@@ -10,13 +10,14 @@ export default function ProgressDetail() {
   const { slug } = useParams();
   const project = projects.find(p => p.slug === slug);
   const { ref, state } = useSectionVisibility();
-  const { theme, toggleTheme } = useTheme();
 
   if (!project)
     return (
       <div className="site-shell">
+        <SiteHeader />
         <main
           id="main-content"
+          tabIndex={-1}
           className="section-shell min-h-screen grid place-items-center"
         >
           <div className="text-center">
@@ -26,11 +27,10 @@ export default function ProgressDetail() {
             </h1>
             <Link
               href="/progress-microcontroller"
-                      className="project-detail-button"
-                      aria-label="View full log for this project"
-                    >
-                      View full log <ArrowUpRight size={15} />
-                    </Link>
+              className="project-detail-button"
+            >
+              Back to progress logs <ArrowLeft size={15} />
+            </Link>
           </div>
         </main>
       </div>
@@ -38,46 +38,9 @@ export default function ProgressDetail() {
 
   return (
     <div className="site-shell">
-      <header className="site-header">
-        <Link className="brand-lockup" href="/">
-          <span className="brand-mark" aria-hidden="true">
-            <span className="signal-symbol">
-              <i />
-              <i />
-              <i />
-            </span>
-          </span>
-          <span className="brand-wordmark">
-            <strong>ARIF</strong>
-            <small>RIJAL FADHILAH</small>
-          </span>
-        </Link>
-        <nav className="primary-nav" aria-label="Breadcrumb">
-          <Link href="/progress-microcontroller">Logs</Link>
-          <span className="text-[9px] uppercase tracking-widest text-[var(--ink-soft)]">
-            /
-          </span>
-          <span className="text-[9px] uppercase tracking-widest text-[var(--accent)] font-mono truncate max-w-[120px]">
-            {project.slug}
-          </span>
-        </nav>
-        <div className="header-actions">
-          <button
-            className="theme-toggle"
-            type="button"
-            onClick={toggleTheme}
-            aria-label={
-              theme === "dark"
-                ? "Switch to light theme"
-                : "Switch to dark theme"
-            }
-          >
-            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-        </div>
-      </header>
+      <SiteHeader />
 
-      <main id="main-content" className="pt-24">
+      <main id="main-content" tabIndex={-1} className="progress-detail">
         <SmoothSection
           ref={ref}
           state={state}
@@ -93,12 +56,10 @@ export default function ProgressDetail() {
 
           <header className="mb-16 border-b border-[var(--line)] pb-12">
             <p className="section-overline">
-              {project.type} · WEEK {project.weeks.length}
+              {project.type} · {project.weeks.length} WEEKLY ENTRIES
             </p>
-            <h1 className="text-clamp-h1 font-bold tracking-tighter leading-[0.86] mb-8">
-              {project.title}
-            </h1>
-            <div className="flex flex-wrap gap-4">
+            <h1 className="progress-detail-title">{project.title}</h1>
+            <div className="detail-actions flex flex-wrap gap-4">
               <a
                 href={project.repo}
                 target="_blank"
@@ -124,12 +85,22 @@ export default function ProgressDetail() {
               <span
                 className={`px-3 py-2 border border-[var(--line)] text-[10px] font-bold uppercase tracking-widest ${project.status === "done" ? "text-green-600" : "text-[var(--accent)]"}`}
               >
-                {project.status}
+                {project.status === "ongoing" ? "In progress" : "Completed"}
               </span>
             </div>
           </header>
 
-          <section className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-16 mb-24">
+          <nav className="detail-section-nav" aria-label="On this page">
+            <a href="#overview">Overview</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#simulation">Simulation</a>
+            <a href="#code">Code</a>
+            <a href="#logs">Weekly logs</a>
+          </nav>
+          <section
+            id="overview"
+            className="detail-overview grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_280px] gap-12 mb-24"
+          >
             <div>
               <h2 className="text-3xl font-bold tracking-tighter mb-6 uppercase">
                 System Description
@@ -197,7 +168,10 @@ export default function ProgressDetail() {
                         {w.dateRange}
                       </span>
                       <h4 className="text-xs font-bold uppercase tracking-tight">
-                        Week {w.week}: {w.title}
+                        <a href={`#week-${w.week}`}>
+                          Week {w.week}: {w.title}{" "}
+                          <ArrowUpRight className="inline" size={12} />
+                        </a>
                       </h4>
                     </div>
                   ))}
@@ -206,7 +180,7 @@ export default function ProgressDetail() {
             </aside>
           </section>
 
-          <section className="mb-24">
+          <section id="architecture" className="mb-24">
             <h2 className="text-3xl font-bold tracking-tighter mb-8 uppercase">
               Architecture
             </h2>
@@ -221,11 +195,6 @@ export default function ProgressDetail() {
                   alt={`${project.title} - system flowchart`}
                   loading="lazy"
                 />
-              {project.slug === "ds18b20-3-speed-fan" && (
-                <div className="mt-16 pt-16 border-t border-[var(--line)] border-dashed">
-                  <FanSimulation />
-                </div>
-              )}
               </div>
               <div>
                 <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
@@ -273,7 +242,12 @@ export default function ProgressDetail() {
             </div>
           </section>
 
-          <section className="mb-24">
+          {project.slug === "ds18b20-3-speed-fan" && (
+            <section id="simulation" className="mb-24">
+              <FanSimulation />
+            </section>
+          )}
+          <section id="code" className="mb-24">
             <h2 className="text-3xl font-bold tracking-tighter mb-8 uppercase">
               Code Snippets
             </h2>
@@ -299,7 +273,7 @@ export default function ProgressDetail() {
             </div>
           </section>
 
-          <section className="mb-24">
+          <section id="logs" className="mb-24">
             <h2 className="text-3xl font-bold tracking-tighter mb-8 uppercase">
               Detailed Logs
             </h2>
@@ -307,6 +281,7 @@ export default function ProgressDetail() {
               {project.weeks.map(w => (
                 <article
                   key={w.week}
+                  id={`week-${w.week}`}
                   className="border-t-2 border-[var(--ink)] pt-8"
                 >
                   <div className="flex flex-wrap justify-between items-baseline mb-8">

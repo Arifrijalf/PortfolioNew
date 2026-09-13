@@ -1,6 +1,6 @@
 // STYLE DIRECTION: Evidence-led field notes — calm editorial structure, warm paper surfaces, and verified engineering details over decorative effects.
-import { Suspense, lazy } from "react";
-import { Route, Switch } from "wouter";
+import { Suspense, lazy, useEffect } from "react";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -15,6 +15,18 @@ const ProgressMicrocontroller = lazy(
 const ProgressDetail = lazy(() => import("@/pages/ProgressDetail"));
 
 function Router() {
+  const [location] = useLocation();
+  useEffect(() => {
+    document.title =
+      location === "/"
+        ? "Arif Rijal Fadhilah — Electronics Engineering"
+        : location === "/progress-microcontroller"
+          ? "Microcontroller Progress — Arif Rijal Fadhilah"
+          : "Engineering Logbook — Arif Rijal Fadhilah";
+    if (!window.location.hash) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [location]);
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -36,7 +48,11 @@ export default function App() {
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light" switchable>
         <Suspense
-          fallback={<div style={{ minHeight: "100svh" }} aria-hidden="true" />}
+          fallback={
+            <main id="main-content" className="route-loading" role="status">
+              Loading page…
+            </main>
+          }
         >
           <Toaster />
           <Router />
