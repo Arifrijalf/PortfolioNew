@@ -1,0 +1,16 @@
+# Arif Rijal Fadhilah — Engineering Portfolio
+
+> Portfolio and engineering logbook covering embedded systems, microcontroller firmware, sensor interfaces, and IoT telemetry.
+
+## Pages
+
+- [Portfolio](https://arifrijalfadhilah.fun/): Profile, selected projects, engineering practice, education, and contact form.
+- [Microcontroller progress](https://arifrijalfadhilah.fun/progress-microcontroller): Project summaries and weekly engineering logs.
+- [DS18B20 fan controller](https://arifrijalfadhilah.fun/progress-microcontroller/ds18b20-3-speed-fan): ESP32 firmware, temperature thresholds, wiring notes, simulator, and implementation history.
+
+## Project sources
+
+- [Fan controller repository](https://github.com/Arifrijalf/Kipas-Otomatis-3-Kecepatan-Berbasis-Sensor-Suhu-DS18B20): Source code, wiring instructions, and acceptance checks.
+- [GitHub profile](https://github.com/arifrijalf): Public repositories.
+
+The fan simulator illustrates PWM targets; it does not measure physical fan RPM. Firmware compilation and physical acceptance testing are reported separately in the project logbook.

@@ -60,7 +60,10 @@ export default function ProgressMicrocontroller() {
                       srcSet={project.imageSrcSet}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
                       alt={project.title}
-                      loading="lazy"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      fetchPriority={index === 0 ? "high" : "auto"}
+                      width={1024}
+                      height={559}
                     />
                   </Link>
                   <span className="evidence-label">

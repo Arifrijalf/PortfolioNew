@@ -75,7 +75,7 @@ export default function ProgressDetail() {
                   href={project.driveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="View project report on Google Drive"
+                  aria-label="Report (Drive)"
                   className="header-cta drive-cta"
                 >
                   <FileText size={15} /> Report (Drive){" "}
@@ -192,6 +192,8 @@ export default function ProgressDetail() {
                 <img
                   className="block w-full h-auto max-w-[400px] mx-auto"
                   src={project.flowchartImage}
+                  width={480}
+                  height={790}
                   alt={`${project.title} - system flowchart`}
                   loading="lazy"
                 />
@@ -203,6 +205,8 @@ export default function ProgressDetail() {
                 <img
                   className="block w-full h-auto max-w-[600px] mx-auto"
                   src={project.blockDiagramImage}
+                  width={1498}
+                  height={203}
                   srcSet={project.blockDiagramSrcSet}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   alt={`${project.title} - system block diagram`}
@@ -288,7 +292,7 @@ export default function ProgressDetail() {
                     <h3 className="text-2xl font-bold uppercase tracking-tight">
                       Week {w.week}: {w.title}
                     </h3>
-                    <span className="font-mono text-[10px] opacity-60">
+                    <span className="font-mono text-[10px] text-[var(--ink-soft)]">
                       {w.dateRange}
                     </span>
                   </div>

@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), tailwindcss()],
   envDir: import.meta.dirname,
   resolve: {
@@ -20,12 +20,14 @@ export default defineConfig({
     cssCodeSplit: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "wouter"],
-          radix: ["@radix-ui/react-dialog", "@radix-ui/react-slot"],
-          sonner: ["sonner"],
-        },
+        manualChunks: isSsrBuild
+          ? undefined
+          : {
+              vendor: ["react", "react-dom", "wouter"],
+              radix: ["@radix-ui/react-dialog", "@radix-ui/react-slot"],
+              sonner: ["sonner"],
+            },
       },
     },
   },
-});
+}));

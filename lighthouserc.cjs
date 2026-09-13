@@ -1,11 +1,17 @@
 module.exports = {
   ci: {
     collect: {
-      url: ["http://localhost:3000/"],
-      startServerCommand: "npx serve dist -l 3000",
+      staticDistDir: "./dist/public",
+      url: [
+        "http://localhost/",
+        "http://localhost/progress-microcontroller",
+        "http://localhost/progress-microcontroller/ds18b20-3-speed-fan",
+      ],
+      numberOfRuns: 3,
     },
     upload: {
-      target: "temporary-public-storage",
+      target: "filesystem",
+      outputDir: "./tmp/lighthouse-ci",
     },
   },
 };

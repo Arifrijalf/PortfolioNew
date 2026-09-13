@@ -3,12 +3,11 @@ import { Suspense, lazy, useEffect } from "react";
 import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import { useContentMotion } from "./hooks/useContentMotion";
+import { getPageMetadata, pageMetadata, siteOrigin } from "./data/pageMetadata";
 
-const Toaster = lazy(() =>
-  import("@/components/ui/sonner").then(module => ({ default: module.Toaster }))
-);
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const Home = lazy(() => import("@/pages/Home"));
 const ProgressMicrocontroller = lazy(
   () => import("@/pages/ProgressMicrocontroller")
 );
@@ -16,13 +15,38 @@ const ProgressDetail = lazy(() => import("@/pages/ProgressDetail"));
 
 function Router() {
   const [location] = useLocation();
+  useContentMotion(location);
   useEffect(() => {
-    document.title =
-      location === "/"
-        ? "Arif Rijal Fadhilah — Electronics Engineering"
-        : location === "/progress-microcontroller"
-          ? "Microcontroller Progress — Arif Rijal Fadhilah"
-          : "Engineering Logbook — Arif Rijal Fadhilah";
+    const path = location.replace(/\/$/, "") || "/";
+    const meta = getPageMetadata(path);
+    document.title = meta.title;
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute("content", meta.description);
+    document
+      .querySelector('meta[name="robots"]')
+      ?.setAttribute(
+        "content",
+        pageMetadata[path] ? "index, follow" : "noindex, follow"
+      );
+    document
+      .querySelector('link[rel="canonical"]')
+      ?.setAttribute("href", `${siteOrigin}${path}`);
+    for (const selector of [
+      'meta[property="og:title"]',
+      'meta[name="twitter:title"]',
+    ])
+      document.querySelector(selector)?.setAttribute("content", meta.title);
+    for (const selector of [
+      'meta[property="og:description"]',
+      'meta[name="twitter:description"]',
+    ])
+      document
+        .querySelector(selector)
+        ?.setAttribute("content", meta.description);
+    document
+      .querySelector('meta[property="og:url"]')
+      ?.setAttribute("content", `${siteOrigin}${path}`);
     if (!window.location.hash) {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
@@ -46,18 +70,17 @@ function Router() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="light" switchable>
-        <Suspense
-          fallback={
-            <main id="main-content" className="route-loading" role="status">
-              Loading page…
-            </main>
-          }
-        >
-          <Toaster />
+      <Suspense
+        fallback={
+          <main id="main-content" className="route-loading" role="status">
+            Loading page…
+          </main>
+        }
+      >
+        <ThemeProvider defaultTheme="light" switchable>
           <Router />
-        </Suspense>
-      </ThemeProvider>
+        </ThemeProvider>
+      </Suspense>
     </ErrorBoundary>
   );
 }

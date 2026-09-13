@@ -21,13 +21,17 @@ export function ThemeProvider({
   defaultTheme = "light",
   switchable = false,
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (switchable) {
-      const stored = localStorage.getItem("theme");
-      return (stored as Theme) || defaultTheme;
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [storageReady, setStorageReady] = useState(false);
+  useEffect(() => {
+    try {
+      const stored = switchable ? localStorage.getItem("theme") : null;
+      if (stored === "dark" || stored === "light") setTheme(stored);
+    } catch {
+      /* The theme still works when browser storage is unavailable. */
     }
-    return defaultTheme;
-  });
+    setStorageReady(true);
+  }, [switchable]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -40,21 +44,29 @@ export function ThemeProvider({
       root.classList.remove("dark");
     }
 
-    if (switchable) {
-      localStorage.setItem("theme", theme);
-    }
-  }, [theme, switchable]);
-
-  const toggleTheme = switchable
-    ? () => {
-        setTheme(prev => (prev === "light" ? "dark" : "light"));
+    if (switchable && storageReady) {
+      try {
+        localStorage.setItem("theme", theme);
+      } catch {
+        /* Optional persistence. */
       }
-    : undefined;
+    }
+  }, [theme, switchable, storageReady]);
+
+  const toggleTheme = React.useCallback(() => {
+    setTheme(prev => (prev === "light" ? "dark" : "light"));
+  }, []);
+  const value = React.useMemo(
+    () => ({
+      theme,
+      toggleTheme: switchable ? toggleTheme : undefined,
+      switchable,
+    }),
+    [theme, toggleTheme, switchable]
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, switchable }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 }
 

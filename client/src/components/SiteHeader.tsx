@@ -42,7 +42,6 @@ export function SiteHeader() {
       <Link
         className="brand-lockup"
         href="/"
-        aria-label="Arif Rijal Fadhilah — Home"
         onClick={() => setMenuOpen(false)}
       >
         <span className="brand-mark" aria-hidden="true">

@@ -8,45 +8,33 @@ export function useSectionVisibility() {
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
-
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (reduced || !("IntersectionObserver" in window)) {
+    if (!element || !("IntersectionObserver" in window)) return;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (motion.matches) return;
+    // Reveal once: revisiting a section must not hide its content or controls.
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) return;
+    setState("far");
+    const reveal = () => {
       setState("active");
-      return;
-    }
-
-    const apply = (value: VisibilityState) =>
-      setState(previous => (previous === value ? previous : value));
-    const observe = () => {
-      const rect = element.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      const visible = rect.top < vh * 0.85 && rect.bottom > vh * 0.15;
-      apply(visible ? "active" : "far");
+      observer.disconnect();
     };
-
-    observe();
-    window.addEventListener("scroll", observe, { passive: true });
-    window.addEventListener("resize", observe);
-
-    let observer: IntersectionObserver | undefined;
-    if ("IntersectionObserver" in window) {
-      observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) apply("active");
-          else observe();
-        },
-        { threshold: 0.01 }
-      );
-      observer.observe(element);
-    }
-
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) reveal();
+      },
+      { threshold: 0, rootMargin: "0px 0px -32px 0px" }
+    );
+    observer.observe(element);
+    const onMotionChange = () => {
+      if (motion.matches) reveal();
+    };
+    motion.addEventListener("change", onMotionChange);
+    element.addEventListener("focusin", reveal);
     return () => {
-      observer?.disconnect();
-      window.removeEventListener("scroll", observe);
-      window.removeEventListener("resize", observe);
+      observer.disconnect();
+      motion.removeEventListener("change", onMotionChange);
+      element.removeEventListener("focusin", reveal);
     };
   }, []);
 

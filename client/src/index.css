@@ -28,7 +28,7 @@
   --ink: #191917;
   --ink-soft: #65615a;
   --line: color-mix(in srgb, var(--ink) 18%, transparent);
-  --accent: #bb3a1c;
+  --accent: #b2361b;
   --slate: #232321;
   --slate-fg: #f4f0e8;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -1686,7 +1686,7 @@ p {
     animation: hero-fade-in 760ms var(--ease-out) both;
   }
   .hero-fade-in--delayed {
-    animation-delay: 120ms;
+    animation-delay: 180ms;
   }
 }
 
@@ -2051,6 +2051,227 @@ p {
 }
 
 /* Shared navigation and readable logbook layouts. */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes content-enter {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes heading-enter {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+    rotate: -1deg;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    rotate: 0deg;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .route-enter .progress-detail-title,
+  .route-enter .progress-index-title {
+    animation: heading-enter 750ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: left bottom;
+  }
+  .primary-nav a {
+    position: relative;
+  }
+  .primary-nav a::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -7px;
+    height: 2px;
+    background: var(--accent);
+    scale: 0 1;
+    transform-origin: left;
+    transition: scale 280ms var(--ease-out);
+  }
+  .primary-nav a:hover::after,
+  .primary-nav a:focus-visible::after,
+  .primary-nav a[aria-current]::after {
+    scale: 1 1;
+  }
+  .project-evidence {
+    transition:
+      scale 400ms var(--ease-out),
+      box-shadow 400ms ease;
+  }
+  .project-filters button {
+    transition:
+      color 200ms ease,
+      background-color 200ms ease,
+      scale 250ms var(--ease-out);
+  }
+  .project-filters button.is-active {
+    scale: 1.04;
+  }
+  .simulation-controls button:hover:not(:disabled) {
+    translate: 0 -3px;
+  }
+  .simulation-controls button {
+    transition:
+      translate 250ms var(--ease-out),
+      scale 150ms ease,
+      color 200ms ease,
+      background-color 200ms ease;
+  }
+  .theme-toggle:hover svg {
+    rotate: 25deg;
+  }
+  .theme-toggle svg {
+    transition: rotate 320ms var(--ease-out);
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .project-card:hover .project-evidence {
+    scale: 1.015;
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--ink) 12%, transparent);
+  }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+  .primary-nav a::after {
+    inset: auto 12px 6px;
+  }
+  .primary-nav.is-open a {
+    animation: content-enter 350ms var(--ease-out) backwards;
+  }
+  .primary-nav.is-open a:nth-child(2) {
+    animation-delay: 35ms;
+  }
+  .primary-nav.is-open a:nth-child(3) {
+    animation-delay: 70ms;
+  }
+  .primary-nav.is-open a:nth-child(4) {
+    animation-delay: 105ms;
+  }
+  .primary-nav.is-open a:nth-child(5) {
+    animation-delay: 140ms;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-shell > main.route-enter {
+    animation: page-enter 560ms var(--ease-out) both;
+  }
+  .project-list[data-filtered="true"] > .project-card {
+    animation: content-enter 650ms var(--ease-out) both;
+  }
+  .project-list > .project-card:nth-child(2) {
+    animation-delay: 90ms;
+  }
+  .project-list > .project-card:nth-child(3) {
+    animation-delay: 180ms;
+  }
+  .smooth-section {
+    transition-duration: 650ms;
+  }
+  .site-shell,
+  .site-header,
+  .site-footer,
+  .practice-section,
+  .contact-section,
+  .logbook-callout,
+  .simulation-panel,
+  .simulation-table tr,
+  .project-dialog,
+  .lightbox-dialog {
+    transition:
+      background-color 240ms ease,
+      color 240ms ease,
+      border-color 240ms ease,
+      opacity 650ms var(--ease-out),
+      transform 650ms var(--ease-out);
+  }
+  .simulation-controls button,
+  .detail-section-nav a,
+  .page-breadcrumb a,
+  .progress-card-title a,
+  .primary-nav a,
+  .detail-overview aside a {
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      translate 180ms var(--ease-out);
+  }
+  .simulation-controls button:active:not(:disabled),
+  .project-detail-button:active,
+  .project-link:active {
+    scale: 0.97;
+  }
+  .simulation-controls button,
+  .project-detail-button,
+  .project-link {
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms var(--ease-out),
+      translate 250ms var(--ease-out),
+      scale 120ms ease;
+  }
+  .theme-toggle svg,
+  .mobile-menu-toggle svg {
+    animation: content-enter 180ms ease-out;
+  }
+  .project-actions a svg,
+  .project-actions button svg,
+  .detail-actions a svg,
+  .logbook-callout a svg {
+    transition: translate 180ms var(--ease-out);
+  }
+  .project-actions a:hover svg,
+  .project-actions button:hover svg,
+  .detail-actions a:hover svg,
+  .logbook-callout a:hover svg {
+    translate: 2px -2px;
+  }
+  .contact-form-status {
+    animation: content-enter 220ms ease-out;
+  }
+}
+@media (max-width: 760px) {
+  .primary-nav {
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -18px;
+    pointer-events: none;
+    transition:
+      opacity 280ms ease,
+      translate 320ms var(--ease-out),
+      visibility 280ms;
+  }
+  .primary-nav.is-open {
+    visibility: visible;
+    opacity: 1;
+    translate: 0 0;
+    pointer-events: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .smooth-section {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .primary-nav {
+    translate: none;
+  }
+}
 :where(a, button, input, textarea, summary):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;

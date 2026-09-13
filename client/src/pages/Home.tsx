@@ -1,26 +1,23 @@
 import { SiteHeader } from "@/components/SiteHeader";
+import { useRef } from "react";
 // STYLE DIRECTION: Evidence-led field notes — use a quiet personal portrait, real engineering details, restrained vermilion, and documentation-like hierarchy.
 import {
   ArrowDownRight,
   ArrowUp,
   ArrowUpRight,
-  ChevronLeft,
-  ChevronRight,
   LoaderCircle,
   Maximize2,
-  X,
 } from "lucide-react";
 import { Link } from "wouter";
-import { toast } from "sonner";
-import { type FormEvent, useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { type FormEvent, useEffect, useState, Suspense, lazy } from "react";
+
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 import { SmoothSection } from "@/components/SmoothSection";
+
+const ProjectDialogs = lazy(() => import("@/components/ProjectDialogs"));
+const Toaster = lazy(() =>
+  import("@/components/ui/sonner").then(module => ({ default: module.Toaster }))
+);
 
 const projects = [
   {
@@ -128,6 +125,8 @@ const projects = [
   },
 ] as const;
 
+export type PortfolioProject = (typeof projects)[number];
+
 const projectFilters = ["All", "Arduino", "ESP", "College Projects"] as const;
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xljebedn";
 const MESSAGE_MAX_LENGTH = 1000;
@@ -184,6 +183,9 @@ export default function Home() {
   const { ref: practiceRef, state: practiceState } = useSectionVisibility();
   const { ref: experienceRef, state: experienceState } = useSectionVisibility();
   const { ref: contactRef, state: contactState } = useSectionVisibility();
+  const [dialogsLoaded, setDialogsLoaded] = useState(false);
+  const submitInFlight = useRef(false);
+  const [showToaster, setShowToaster] = useState(false);
   const [detailProject, setDetailProject] = useState<
     (typeof projects)[number] | null
   >(null);
@@ -215,8 +217,10 @@ export default function Home() {
     return () => document.documentElement.classList.remove("motion-ready");
   }, []);
 
-  const openLightbox = (project: (typeof projects)[number], index = 0) =>
+  const openLightbox = (project: (typeof projects)[number], index = 0) => {
+    setDialogsLoaded(true);
     setLightbox({ project, index });
+  };
   const shiftLightbox = (direction: number) => {
     setLightbox(current => {
       if (!current) return null;
@@ -237,7 +241,19 @@ export default function Home() {
 
   const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isSubmitting) return;
+    if (submitInFlight.current) return;
+    submitInFlight.current = true;
+    setShowToaster(true);
+    let toast: typeof import("sonner").toast;
+    try {
+      ({ toast } = await import("sonner"));
+    } catch {
+      submitInFlight.current = false;
+      setContactFormStatus(
+        "Could not load the contact form. Please try again."
+      );
+      return;
+    }
 
     const normalizedEmail = contactForm.email.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
@@ -245,6 +261,7 @@ export default function Home() {
       toast.error("Check your email", {
         description: "Use a format such as name@example.com.",
       });
+      submitInFlight.current = false;
       return;
     }
 
@@ -256,6 +273,7 @@ export default function Home() {
       toast.error("Message rate limit", {
         description: `Please wait ${waitTime}s before sending another message.`,
       });
+      submitInFlight.current = false;
       return;
     }
 
@@ -308,6 +326,7 @@ export default function Home() {
       toast.dismiss(loadingToast);
       toast.error("Message not sent", { description: detail });
     } finally {
+      submitInFlight.current = false;
       setIsSubmitting(false);
     }
   };
@@ -324,18 +343,25 @@ export default function Home() {
         >
           <div className="opening-canvas">
             <NameMarquee />
-            <img
-              className="opening-photo"
-              src="/assets/arif-profile-avatar_321c33ab.webp"
-              srcSet="/assets/arif-profile-avatar_321c33ab_480.webp 480w, /assets/arif-profile-avatar_321c33ab_1024.webp 1024w, /assets/arif-profile-avatar_321c33ab.webp 2048w"
-              sizes="(max-width: 760px) 88vw, min(74vw, 630px)"
-              alt="Arif Rijal Fadilah"
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-              width="630"
-              height="665"
-            />
+            <picture className="contents">
+              <source
+                type="image/avif"
+                srcSet="/assets/arif-profile-avatar_321c33ab_480.avif 480w, /assets/arif-profile-avatar_321c33ab_720.avif 720w, /assets/arif-profile-avatar_321c33ab_1024.avif 1024w"
+                sizes="(max-width: 760px) 88vw, min(74vw, 630px)"
+              />
+              <img
+                className="opening-photo"
+                src="/assets/arif-profile-avatar_321c33ab.webp"
+                srcSet="/assets/arif-profile-avatar_321c33ab_480.webp 480w, /assets/arif-profile-avatar_321c33ab_720.webp 720w, /assets/arif-profile-avatar_321c33ab_1024.webp 1024w, /assets/arif-profile-avatar_321c33ab.webp 2048w"
+                sizes="(max-width: 760px) 88vw, min(74vw, 630px)"
+                alt="Arif Rijal Fadilah"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                width="630"
+                height="665"
+              />
+            </picture>
             <p className="opening-context">
               <span>Electronics Engineering</span>
               <strong>Embedded systems · firmware · IoT telemetry</strong>
@@ -442,7 +468,11 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="project-list">
+          <div
+            className="project-list"
+            key={activeFilter}
+            data-filtered={activeFilter !== "All"}
+          >
             {filteredProjects.map(project => {
               const projectIndex = projects.indexOf(project);
               return (
@@ -504,7 +534,10 @@ export default function Home() {
                       <button
                         className="project-detail-button"
                         type="button"
-                        onClick={() => setDetailProject(project)}
+                        onClick={() => {
+                          setDialogsLoaded(true);
+                          setDetailProject(project);
+                        }}
                       >
                         View details <ArrowUpRight size={15} />
                       </button>
@@ -810,140 +843,40 @@ export default function Home() {
         <button
           className="back-to-top"
           type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+                .matches
+                ? "instant"
+                : "smooth",
+            })
+          }
           aria-label="Back to top"
         >
           <ArrowUp size={15} />
         </button>
       )}
 
-      <Dialog
-        open={Boolean(detailProject)}
-        onOpenChange={open => !open && setDetailProject(null)}
+      <Suspense
+        fallback={
+          <p role="status" className="sr-only">
+            Loading project viewer...
+          </p>
+        }
       >
-        <DialogContent className="project-dialog" showCloseButton={false}>
-          {detailProject && (
-            <>
-              <div className="project-dialog-header">
-                <div>
-                  <p className="dialog-kicker">{detailProject.type}</p>
-                  <DialogTitle>{detailProject.title}</DialogTitle>
-                </div>
-                <button
-                  className="modal-close"
-                  type="button"
-                  onClick={() => setDetailProject(null)}
-                  aria-label="Close project details"
-                >
-                  <X size={19} />
-                </button>
-              </div>
-              <DialogDescription className="project-dialog-description">
-                {detailProject.description}
-              </DialogDescription>
-              <div className="modal-gallery">
-                {detailProject.gallery.map((image, imageIndex) => (
-                  <button
-                    type="button"
-                    className="modal-gallery-item"
-                    key={image.src}
-                    onClick={() => openLightbox(detailProject, imageIndex)}
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      loading="lazy"
-                      decoding="async"
-                      width="800"
-                      height="450"
-                    />
-                    <span>
-                      {image.caption}
-                      <Maximize2 size={14} />
-                    </span>
-                  </button>
-                ))}
-              </div>
-              <div className="project-dialog-footer">
-                <dl className="modal-evidence">
-                  {detailProject.evidence.map(([label, value]) => (
-                    <div key={label}>
-                      <dt>{label}</dt>
-                      <dd>{value}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <a
-                  href={detailProject.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="modal-repository-link"
-                >
-                  Open repository <ArrowUpRight size={16} />
-                </a>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
-
-      <Dialog
-        open={Boolean(lightbox)}
-        onOpenChange={open => !open && setLightbox(null)}
-      >
-        <DialogContent className="lightbox-dialog" showCloseButton={false}>
-          {lightbox && (
-            <>
-              <div className="lightbox-header">
-                <span>
-                  {lightbox.project.title} · {lightbox.index + 1}/
-                  {lightbox.project.gallery.length}
-                </span>
-                <button
-                  className="modal-close"
-                  type="button"
-                  onClick={() => setLightbox(null)}
-                  aria-label="Close image gallery"
-                >
-                  <X size={19} />
-                </button>
-              </div>
-              <div className="lightbox-stage">
-                {lightbox.project.gallery.length > 1 && (
-                  <button
-                    className="lightbox-nav lightbox-previous"
-                    type="button"
-                    onClick={() => shiftLightbox(-1)}
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft size={22} />
-                  </button>
-                )}
-                <img
-                  src={lightbox.project.gallery[lightbox.index].src}
-                  alt={lightbox.project.gallery[lightbox.index].alt}
-                  decoding="async"
-                  width="1200"
-                  height="675"
-                />
-                {lightbox.project.gallery.length > 1 && (
-                  <button
-                    className="lightbox-nav lightbox-next"
-                    type="button"
-                    onClick={() => shiftLightbox(1)}
-                    aria-label="Next image"
-                  >
-                    <ChevronRight size={22} />
-                  </button>
-                )}
-              </div>
-              <p className="lightbox-caption">
-                {lightbox.project.gallery[lightbox.index].caption}
-              </p>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+        {dialogsLoaded && (
+          <ProjectDialogs
+            detailProject={detailProject}
+            lightbox={lightbox}
+            setDetailProject={setDetailProject}
+            setLightbox={setLightbox}
+            openLightbox={openLightbox}
+            shiftLightbox={shiftLightbox}
+          />
+        )}
+        {showToaster && <Toaster />}
+      </Suspense>
 
       <footer className="site-footer">
         <span className="footer-identity">

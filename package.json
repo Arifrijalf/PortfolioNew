@@ -5,10 +5,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir ../dist/server && node scripts/prerender.mjs",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=22.19.0"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",

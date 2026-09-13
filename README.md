@@ -26,7 +26,7 @@ Live site: [arifrijalfadhilah.fun](https://arifrijalfadhilah.fun)
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18+)
+- [Node.js](https://nodejs.org/) (v22.19+; validated with Node 24)
 - [pnpm](https://pnpm.io/)
 
 ### Installation
@@ -46,6 +46,10 @@ pnpm dev
 ```bash
 pnpm build
 ```
+
+The build pre-renders the public routes and a 404 page, then hydrates them with React in the browser. Publish **`dist/public`** to Cloudflare Pages; `dist/server` is used only during the build. Each public route has its own title, description, canonical URL, and readable HTML before JavaScript loads.
+
+Preview the production build with `pnpm preview`. Performance audit results and repeat instructions are in [docs/PERFORMANCE.md](docs/PERFORMANCE.md).
 
 ### Type Check
 
