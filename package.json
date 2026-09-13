@@ -8,6 +8,7 @@
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "build": "vite build && vite build --ssr src/entry-server.tsx --outDir ../dist/server && node scripts/prerender.mjs",
     "check": "tsc --noEmit",
+    "verify:release": "npm run check && npm test && npm run build",
     "format": "prettier --write .",
     "test": "vitest run"
   },
