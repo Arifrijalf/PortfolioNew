@@ -29,9 +29,7 @@ export type ProgressProject = {
     deployment: string;
   };
   flowchartImage: string;
-  flowchartSrcSet?: string;
   blockDiagramImage: string;
-  blockDiagramSrcSet?: string;
   folderStructure: string;
   codeSnippets: {
     label: string;
@@ -102,10 +100,8 @@ export const projects: ProgressProject[] = [
       deployment:
         "PlatformIO environment esp32dev targets esp32doit-devkit-v1 with the Arduino framework. The fan uses a separate 12V supply with common ground. The repository documents successful firmware builds and compile-time logic tests; upload and physical sensor, LED, driver, and fan acceptance checks remain pending.",
     },
-    flowchartImage: "/assets/flowchart-project1.svg",
-    blockDiagramImage: "/assets/block-diagram-project1.webp",
-    blockDiagramSrcSet:
-      "/assets/block-diagram-project1_480.webp 480w, /assets/block-diagram-project1_800.webp 800w, /assets/block-diagram-project1.webp 1498w",
+    flowchartImage: "/assets/flowchart-fix.drawio.png",
+    blockDiagramImage: "/assets/blok-diagram-fix.drawio.png",
     folderStructure: `.
 ├── docs/
 │   └── IMPLEMENTATION.md
@@ -224,15 +220,17 @@ constexpr uint8_t pwmFor(uint8_t level) {
         title: "PlatformIO Scaffold and Wiring Documentation",
         progress: [
           "September 4 repository history records the initial fan-control project and wiring guide",
+          "Defined the first control flow: initialize ESP32, DS18B20, and PWM, then read temperature before selecting a fan level",
+          "Created the supplied system flowchart and block diagram, including the one-second sampling and serial-monitor path",
           "Configured ESP32 DOIT DevKit V1 with OneWire, DallasTemperature, and serial monitoring",
-          "Documented the sensor connection, MOSFET driver, separate fan supply, and common ground",
+          "Documented the sensor connection, MOSFET driver, separate fan supply, flyback diode, and common ground",
         ],
         challenges: [
           "Sensor communication depends on the DATA pull-up and correct GPIO wiring",
           "The driver and fan require physical checks beyond firmware compilation",
         ],
         selfEvaluation:
-          "The initial software and wiring baseline is recorded in Git. Physical sensor accuracy and fan operation are not established by the repository's acceptance documentation.",
+          "The design baseline is now visible in the supplied flowchart and block diagram. Physical sensor accuracy and fan operation are not established by the repository's acceptance documentation.",
         nextPlan: [
           "Separate hardware-independent control logic from the Arduino loop",
           "Add boundary tests, PWM ramping, and sensor-fault recovery",
@@ -245,6 +243,7 @@ constexpr uint8_t pwmFor(uint8_t level) {
         progress: [
           "September 10: extracted constexpr control logic into FanControl.h and standardized project documentation (94b4c4b)",
           "Implemented nonblocking conversions, fixed PWM targets, timed ramping, and automatic recovery after sensor errors",
+          "Recorded the relationship between the supplied diagrams and the tested firmware: the diagrams show the initial 25/30/40°C design, while the refined firmware uses 25/30/35°C fan boundaries",
           "September 12: updated the high-speed threshold to 35°C and introduced one-at-a-time color indicators (f195b4f)",
           "Added static assertions for fan and LED boundaries, invalid readings, PWM targets, and ramp convergence from every initial PWM value",
           "README records successful firmware build and compile-time logic tests",

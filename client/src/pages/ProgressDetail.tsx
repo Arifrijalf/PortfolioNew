@@ -192,8 +192,8 @@ export default function ProgressDetail() {
                 <img
                   className="block w-full h-auto max-w-[400px] mx-auto"
                   src={project.flowchartImage}
-                  width={480}
-                  height={790}
+                  width={1129}
+                  height={725}
                   alt={`${project.title} - system flowchart`}
                   loading="lazy"
                 />
@@ -205,9 +205,8 @@ export default function ProgressDetail() {
                 <img
                   className="block w-full h-auto max-w-[600px] mx-auto"
                   src={project.blockDiagramImage}
-                  width={1498}
-                  height={203}
-                  srcSet={project.blockDiagramSrcSet}
+                  width={674}
+                  height={226}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   alt={`${project.title} - system block diagram`}
                   loading="lazy"
