@@ -205,8 +205,8 @@ export default function ProgressDetail() {
                 <img
                   className="block w-full h-auto max-w-[600px] mx-auto"
                   src={project.blockDiagramImage}
-                  width={674}
-                  height={226}
+                  width={1507}
+                  height={409}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   alt={`${project.title} - system block diagram`}
                   loading="lazy"
