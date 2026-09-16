@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 674 226" role="img" aria-labelledby="title desc">
+  <title id="title">Block diagram sistem kipas otomatis berbasis ESP32 dan DS18B20</title>
+  <desc id="desc">Sensor suhu DS18B20 mengirim data ke ESP32. ESP32 memproses data dan menghasilkan serial monitor, indikator LED, serta kendali PWM MOSFET untuk kipas DC 12 volt.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4b5563"/>
+    </marker>
+    <style>
+      .group { fill: #fffde8; stroke: #c8b900; stroke-width: 1.5; }
+      .node { fill: #f0efff; stroke: #8b78d8; stroke-width: 1.2; }
+      .label { fill: #30323a; font: 10px Arial, sans-serif; text-anchor: middle; }
+      .heading { fill: #454545; font: 10px Arial, sans-serif; text-anchor: middle; }
+      .wire { fill: none; stroke: #4b5563; stroke-width: 1.4; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="group" x="1" y="72" width="98" height="84" rx="1"/>
+  <text class="heading" x="50" y="84">Input</text>
+  <rect class="node" x="19" y="98" width="62" height="34" rx="1"/>
+  <text class="label" x="50" y="112"><tspan x="50">Sensor Suhu</tspan><tspan x="50" dy="12">DS18B20</tspan></text>
+
+  <rect class="group" x="190" y="61" width="126" height="104" rx="1"/>
+  <text class="heading" x="253" y="74">Proses</text>
+  <rect class="node" x="207" y="87" width="92" height="53" rx="1"/>
+  <text class="label" x="253" y="99"><tspan x="253">ESP32</tspan><tspan x="253" dy="12">• Membaca data suhu</tspan><tspan x="253" dy="12">• Mengatur PWM</tspan><tspan x="253" dy="12">• Linear Mapping</tspan></text>
+
+  <rect class="group" x="395" y="5" width="274" height="215" rx="1"/>
+  <text class="heading" x="532" y="17">Output</text>
+  <rect class="node" x="415" y="27" width="88" height="41" rx="1"/>
+  <text class="label" x="459" y="42"><tspan x="459">Serial Monitor</tspan><tspan x="459" dy="12">(Suhu, PWM, Status)</tspan></text>
+  <rect class="node" x="415" y="79" width="88" height="41" rx="1"/>
+  <text class="label" x="459" y="94"><tspan x="459">LED Indikator</tspan><tspan x="459" dy="12">(D1, D2, D3)</tspan></text>
+  <rect class="node" x="415" y="166" width="88" height="41" rx="1"/>
+  <text class="label" x="459" y="181"><tspan x="459">MOSFET IRLZ44N</tspan><tspan x="459" dy="12">Driver PWM</tspan></text>
+  <rect class="node" x="588" y="166" width="69" height="41" rx="1"/>
+  <text class="label" x="622" y="181"><tspan x="622">Kipas DC 12V</tspan></text>
+
+  <path class="wire" d="M 81 115 H 190"/>
+  <text class="label" x="135" y="107">Data suhu digital (1-Wire)</text>
+  <path class="wire" d="M 316 113 H 395"/>
+  <text class="label" x="355" y="105">Sinyal digital</text>
+  <path class="wire" d="M 503 186 H 588"/>
+  <text class="label" x="545" y="178">Daya 12V terkontrol</text>
+</svg>

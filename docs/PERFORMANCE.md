@@ -13,7 +13,7 @@ The target is 100 for Performance, Accessibility, Best Practices, and SEO. Agent
 - Critical CSS included in each HTML document; the interactive React runtime starts after the first paint, or immediately on keyboard/pointer interaction.
 - One shared variable Space Grotesk font URL instead of downloading identical files for several weights.
 - Responsive 720px portrait asset and eager, high-priority loading of the first progress image.
-- Explicit diagram dimensions reserve layout space for the supplied flowchart and block diagram PNG assets.
+- Explicit diagram dimensions reserve layout space for the supplied flowchart PNG and crisp vector block diagram SVG.
 - Accessible label consistency and stronger contrast for logbook text.
 - Persistent theme state restored after hydration, without markup mismatches.
 - Initial content stays visible; expressive route, hover, filter, gallery, and scroll effects respect reduced motion.

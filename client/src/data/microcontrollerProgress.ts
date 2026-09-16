@@ -101,7 +101,7 @@ export const projects: ProgressProject[] = [
         "PlatformIO environment esp32dev targets esp32doit-devkit-v1 with the Arduino framework. The fan uses a separate 12V supply with common ground. The repository documents successful firmware builds and compile-time logic tests; upload and physical sensor, LED, driver, and fan acceptance checks remain pending.",
     },
     flowchartImage: "/assets/flowchart-fix.drawio.png",
-    blockDiagramImage: "/assets/blok-diagram-fix.drawio.png",
+    blockDiagramImage: "/assets/blok-diagram-fix.svg",
     folderStructure: `.
 ├── docs/
 │   └── IMPLEMENTATION.md
