@@ -192,8 +192,8 @@ export default function ProgressDetail() {
                 <img
                   className="block w-full h-auto max-w-[400px] mx-auto"
                   src={project.flowchartImage}
-                  width={1027}
-                  height={825}
+                  width={1129}
+                  height={812}
                   alt={`${project.title} - system flowchart`}
                   loading="lazy"
                 />
