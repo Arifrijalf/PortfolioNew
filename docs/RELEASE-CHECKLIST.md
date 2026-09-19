@@ -18,4 +18,3 @@ Cloudflare Pages deployment.
 The local audit is a lab check. After Cloudflare deployment, repeat the same
 routes in PageSpeed Insights because network conditions, cache state, and field
 data can differ from local Lighthouse results.
-

@@ -31,12 +31,13 @@ The target is 100 for Performance, Accessibility, Best Practices, and SEO. Agent
    ```
 
    Add `--preset=desktop` and change the output filename for desktop. Repeat for all public routes. Reports remain local in the ignored `tmp/` directory.
+
 5. Avoid concurrent builds or browser tests during performance measurement. Run three times and compare the median, rather than choosing the best run.
 
-| Page | Path |
-| --- | --- |
-| Homepage | `/` |
-| Progress index | `/progress-microcontroller` |
+| Page               | Path                                            |
+| ------------------ | ----------------------------------------------- |
+| Homepage           | `/`                                             |
+| Progress index     | `/progress-microcontroller`                     |
 | Fan controller log | `/progress-microcontroller/ds18b20-3-speed-fan` |
 
 `lighthouserc.cjs` also covers all three production routes and writes reports to local filesystem storage. Its bundled Lighthouse version is older; use the current CLI above for Agentic Browsing.

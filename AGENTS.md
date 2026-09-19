@@ -46,4 +46,3 @@ variability in the handoff or final response.
 
 Cloudflare Pages must publish `dist/public`. Preserve the route-specific
 pre-rendered files and do not add a wildcard rewrite to the homepage.
-
