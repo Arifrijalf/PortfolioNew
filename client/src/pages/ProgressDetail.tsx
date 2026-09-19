@@ -189,14 +189,24 @@ export default function ProgressDetail() {
                 <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
                   Flowchart
                 </h3>
-                <img
-                  className="block w-full h-auto max-w-[400px] mx-auto"
-                  src={project.flowchartImage}
-                  width={1129}
-                  height={812}
-                  alt={`${project.title} - system flowchart`}
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcSet="/assets/flowchart-fix.drawio.avif"
+                  />
+                  <source
+                    type="image/webp"
+                    srcSet="/assets/flowchart-fix.drawio.webp"
+                  />
+                  <img
+                    className="block w-full h-auto max-w-[400px] mx-auto"
+                    src={project.flowchartImage}
+                    width={1129}
+                    height={812}
+                    alt={`${project.title} - system flowchart`}
+                    loading="lazy"
+                  />
+                </picture>
               </div>
               <div>
                 <h3 className="text-[10px] uppercase tracking-widest text-[var(--accent)] font-mono mb-4">
