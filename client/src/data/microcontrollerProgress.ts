@@ -56,7 +56,7 @@ export const projects: ProgressProject[] = [
     repo: "https://github.com/Arifrijalf/Kipas-Otomatis-3-Kecepatan-Berbasis-Sensor-Suhu-DS18B20",
     driveUrl:
       "https://drive.google.com/drive/folders/1CZNMAuUZl66mUhxRKfNqMLktxJXYp4JU?usp=sharing",
-    status: "ongoing",
+    status: "done",
     summary:
       "An ESP32 controller reads a DS18B20 temperature sensor and selects three fixed PWM targets for a 12V DC fan. Nonblocking sensor conversions keep PWM transitions responsive, while separate green, yellow, and red indicators show temperature ranges. Firmware and compile-time tests are implemented; physical acceptance testing remains pending in the repository.",
     objectives: [

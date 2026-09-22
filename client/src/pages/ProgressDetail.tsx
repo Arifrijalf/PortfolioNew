@@ -83,9 +83,9 @@ export default function ProgressDetail() {
                 </a>
               )}
               <span
-                className={`px-3 py-2 border border-[var(--line)] text-[10px] font-bold uppercase tracking-widest ${project.status === "done" ? "text-green-600" : "text-[var(--accent)]"}`}
+                className={`px-3 py-2 border border-[var(--line)] text-[10px] font-bold uppercase tracking-widest ${project.status === "done" ? "text-green-800" : "text-[var(--accent)]"}`}
               >
-                {project.status === "ongoing" ? "In progress" : "Completed"}
+                {project.status === "ongoing" ? "In progress" : "DONE"}
               </span>
             </div>
           </header>

@@ -67,9 +67,7 @@ export default function ProgressMicrocontroller() {
                     />
                   </Link>
                   <span className="evidence-label">
-                    {project.status === "ongoing"
-                      ? "Work in Progress"
-                      : "Completed Record"}
+                    {project.status === "ongoing" ? "Work in Progress" : "DONE"}
                   </span>
                   <dl>
                     <div>
